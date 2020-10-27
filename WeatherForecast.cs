@@ -1,6 +1,6 @@
 using System;
 
-namespace Strava2._0Api
+namespace straviaBackend
 {
     public class WeatherForecast
     {

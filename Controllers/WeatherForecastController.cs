@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Strava2._0Api.Controllers
+namespace straviaBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
