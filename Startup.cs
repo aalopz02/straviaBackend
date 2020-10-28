@@ -10,6 +10,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using models;
+using straviaBackend.models;
+using straviaBackend.interfaces;
+using straviaBackend.AccessImpl;
 
 namespace straviaBackend
 {
@@ -22,10 +28,16 @@ namespace straviaBackend
 
         public IConfiguration Configuration { get; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
+
+            services.AddDbContext<StravaContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=stravia2.0;User Id=postgres;Password=2098;"));
+
+            services.AddScoped<ICarreraAccessInterface, CarreraAccess>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
