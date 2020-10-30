@@ -20,26 +20,28 @@ namespace straviaBackend.Controllers
             _dataAccessProvider = dataAccessProvider;
         }
 
-        /*[HttpGet]
+        [HttpGet]
         public IEnumerable<ModelUsuario> Get()
         {
-            return _dataAccessProvider.A;
-        }*/
+            return _dataAccessProvider.GetUsuarios();
+        }
 
         [HttpPost]
         public void POSTUsuario(String nombreusuario, String password, String fname,
-        String mname, String lname, String fechaNacimiento, String nacionalidad, int nsiguiendo, int nseguidores)
+        String mname, String lname, String fechaNacimiento, String nacionalidad)
         {
-            ModelUsuario usuario = new ModelUsuario();
-            usuario.NombreUsuario = nombreusuario;
-            usuario.Contraseña = password;
-            usuario.Fname = fname;
-            usuario.Mname = mname;
-            usuario.Lname = lname;
-            usuario.FechaNacimiento = fechaNacimiento;
-            usuario.Nacionalidad = nacionalidad;
-            usuario.Nsiguiendo = nsiguiendo;
-            usuario.Nseguidores = nseguidores;
+            ModelUsuario usuario = new ModelUsuario
+            {
+                NombreUsuario = nombreusuario,
+                Contraseña = password,
+                Fname = fname,
+                Mname = mname,
+                Lname = lname,
+                FechaNacimiento = fechaNacimiento,
+                Nacionalidad = nacionalidad,
+                Nsiguiendo = 0,
+                Nseguidores = 0
+            };
 
             _dataAccessProvider.AddUsuario(usuario);
         }
