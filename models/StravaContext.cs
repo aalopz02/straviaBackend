@@ -14,6 +14,7 @@ namespace straviaBackend.models
         }
 
         public DbSet<ModelCarrera> Carreras { get; set; }
+        public DbSet<ModelUsuario> Usuario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
