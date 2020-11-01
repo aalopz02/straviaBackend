@@ -39,6 +39,9 @@ namespace Strava2._0Api
 
             services.AddScoped<ICarreraAccessInterface, CarreraAccess>();
             services.AddScoped<IUsuarioAccessInterface, UsuarioAccess>();
+            services.AddScoped<ICatAccessInterface, CatAccess>();
+            services.AddScoped<IPatAccessInterface, PatAccess>();
+            services.AddScoped<ITipoActAccessInterface, TipoActAccess>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,3 +1,4 @@
+using straviaBackend.models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,22 +9,22 @@ namespace models {
     
         //public List<String> Posiciones { get; set; }        
     
-        public int Costo { get; set; }
+        public int costo { get; set; }
 
         [Key]
-        public String NombreCarrera { get; set; }
+        public String nombrecarrera { get; set; }
 
-        public String Ruta { get; set; }
+        public byte[] ruta { get; set; }
 
-        public String Tipo { get; set; }
+        public String tipo { get; set; }
 
-        public String Fecha{ get; set; }
+        public String fecha{ get; set; }
 
-        public int CuentaPago{ get; set; }
+        public int cuentapago{ get; set; }
 
-        //public List<Categorias> Categorias { get; set; }
+        public List<ModelCategoria> categorias { get; set; }
 
-        //public List<Usuarios> Usuarios { get; set; }
+        public List<int> patrocinadores { get; set; }
 
     }
 }

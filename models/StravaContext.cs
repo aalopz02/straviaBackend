@@ -13,8 +13,11 @@ namespace straviaBackend.models
         {
         }
 
-        public DbSet<ModelCarrera> Carreras { get; set; }
-        public DbSet<ModelUsuario> Usuario { get; set; }
+        public DbSet<ModelCarrera> carreras { get; set; }
+        public DbSet<ModelUsuario> usuario { get; set; }
+        public DbSet<ModelCategoria> categorias { get; set; }
+        public DbSet<ModelPatrocinador> patrocinadores { get; set; }
+        public DbSet<ModelTipoActividad> tiposactividades { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

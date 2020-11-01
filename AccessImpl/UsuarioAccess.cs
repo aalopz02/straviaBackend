@@ -19,16 +19,27 @@ namespace straviaBackend.AccessImpl
 
         public void AddUsuario(ModelUsuario usuario)
         {
-            _context.Usuario.Add(usuario);
+            _context.usuario.Add(usuario);
             _context.SaveChanges();
         }
 
         public ModelUsuario GetUsuario(string NombreUsuario){
-             return _context.Usuario.FirstOrDefault(t => t.NombreUsuario == NombreUsuario);
+
+            return _context.usuario.FirstOrDefault(t => t.nombreusuario == NombreUsuario);
         }
 
         public List<ModelUsuario> GetUsuarios() {
-            return _context.Usuario.ToList();
+            return _context.usuario.ToList();
+        }
+
+        void IUsuarioAccessInterface.DeleteUsuario(string NombreUsuario)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IUsuarioAccessInterface.UpdateUsuario(ModelUsuario usuario)
+        {
+            throw new NotImplementedException();
         }
     }
 }

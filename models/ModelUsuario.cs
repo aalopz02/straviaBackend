@@ -7,23 +7,23 @@ namespace models {
     {        
 
         [Key]
-        public String NombreUsuario { get; set; }
+        public String nombreusuario { get; set; }
 
-        public String Contraseña { get; set; }
+        public String contraseña { get; set; }
 
-        public String Fname { get; set; }
+        public String fname { get; set; }
 
-        public String Mname { get; set; }
+        public String mname { get; set; }
 
-        public String Lname { get; set; }
+        public String lname { get; set; }
 
-        public String FechaNacimiento { get; set; }
+        public String fechanacimiento { get; set; }
 
-        public String Nacionalidad { get; set; }
+        public String nacionalidad { get; set; }
 
-        public int Nsiguiendo{ get; set; }
+        public int nsiguiendo{ get; set; }
 
-        public int Nseguidores { get; set; }
+        public int nseguidores { get; set; }
 
 
     }

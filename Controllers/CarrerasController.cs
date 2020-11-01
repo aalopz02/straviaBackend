@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using models;
 using straviaBackend.interfaces;
 
-/*
- * 
- * {
-"NombreCarrera":"testcar",
-"Costo":1234,
-"Ruta":"cerrodelamuerte",
-"Tipo":"Competencia",
-"CuentaPago":0987654321
-}
- */
 
 namespace straviaBackend.Controllers
 {
@@ -36,32 +27,25 @@ namespace straviaBackend.Controllers
             return _dataAccessProvider.GetCarreras();
         }
 
-        [HttpPost]
-        public void AddCarrera(String nombreCarrera,int Costo,String ruta,int Cuenta,String Fecha,String tipo)
+        [HttpPost("{ruta,patrocinadores}")]
+        public void AddCarrera(String nombreCarrera,int Costo,int Cuenta,String Fecha,String tipo,byte[] ruta,String patrocinadores)
         {
-            ModelCarrera carrera = new ModelCarrera();
-            carrera.Costo = Costo;
-            carrera.CuentaPago = Cuenta;
-            carrera.Fecha = Fecha;
-            carrera.Ruta = ruta;
-            carrera.Tipo = tipo;
-            carrera.NombreCarrera = nombreCarrera;
+            List<int> listaIds = new List<int>();
+            foreach (string idpatrocinador in patrocinadores.Split(".")) listaIds.Add(int.Parse(idpatrocinador));
+
+            ModelCarrera carrera = new ModelCarrera
+            {
+                costo = Costo,
+                cuentapago = Cuenta,
+                fecha = Fecha,
+                ruta = ruta,
+                tipo = tipo,
+                nombrecarrera = nombreCarrera,
+                patrocinadores = listaIds
+            };
             _dataAccessProvider.AddCarrera(carrera);
         }
-        /*
-        [HttpPost]
-        public IActionResult Create([FromBody] ModelCarrera carrera)
-        {
-            if (ModelState.IsValid)
-            {
-                Guid obj = Guid.NewGuid();
-                carrera.NombreCarrera = obj.ToString();
-                _dataAccessProvider.AddCarrera(carrera);
-                return Ok();
-            }
-            return BadRequest();
-        }
-        */
+
         [HttpGet("{nombreCarrera}")]
         public ModelCarrera Details(string nombreCarrera)
         {
