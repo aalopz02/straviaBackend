@@ -36,12 +36,15 @@ namespace Strava2._0Api
             var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
 
             services.AddDbContext<StravaContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=stravia2.0;User Id=postgres;Password=2098;"));
-
+            services.AddScoped<ITipoActAccessInterface, TipoActAccess>();
+            services.AddScoped<ICategoriasporCarreraAccessInterface, CategoriasporCarreraAccess>();
+            services.AddScoped<IPatrociandorporCarreraAccessInterface, PatrocinadoresporCarreraAccess>();
             services.AddScoped<ICarreraAccessInterface, CarreraAccess>();
             services.AddScoped<IUsuarioAccessInterface, UsuarioAccess>();
             services.AddScoped<ICatAccessInterface, CatAccess>();
             services.AddScoped<IPatAccessInterface, PatAccess>();
-            services.AddScoped<ITipoActAccessInterface, TipoActAccess>();
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

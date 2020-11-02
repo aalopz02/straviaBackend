@@ -15,35 +15,56 @@ namespace straviaBackend.Controllers
     public class CarrerasController : ControllerBase
     {
         private readonly ICarreraAccessInterface _dataAccessProvider;
+        private readonly IPatrociandorporCarreraAccessInterface _pats;
+        private readonly ICategoriasporCarreraAccessInterface _cats;
 
-        public CarrerasController(ICarreraAccessInterface dataAccessProvider)
+        public CarrerasController(ICarreraAccessInterface dataAccessProvider,
+                                    IPatrociandorporCarreraAccessInterface pats,
+                                    ICategoriasporCarreraAccessInterface cats)
         {
             _dataAccessProvider = dataAccessProvider;
-        }
+            _pats = pats;
+            _cats = cats;
+    }
 
         [HttpGet]
         public IEnumerable<ModelCarrera> Get()
         {
             return _dataAccessProvider.GetCarreras();
         }
-
-        [HttpPost("{ruta,patrocinadores}")]
-        public void AddCarrera(String nombreCarrera,int Costo,int Cuenta,String Fecha,String tipo,byte[] ruta,String patrocinadores)
+        //https://localhost:44379/api/Carreras?nombreCarrera=lacarrera&Costo=12345&Cuenta=1234567890&Fecha=fecha&privacidad=publico&idtipo=1&ruta=0&patrocinadores=1.2&categorias=1.2.3
+        [HttpPost]
+        public void AddCarrera(String nombreCarrera,int Costo,int Cuenta,String Fecha,String privacidad, int idtipo, byte[] ruta,String patrocinadores,String categorias)
         {
-            List<int> listaIds = new List<int>();
-            foreach (string idpatrocinador in patrocinadores.Split(".")) listaIds.Add(int.Parse(idpatrocinador));
-
             ModelCarrera carrera = new ModelCarrera
             {
                 costo = Costo,
                 cuentapago = Cuenta,
                 fecha = Fecha,
                 ruta = ruta,
-                tipo = tipo,
+                privacidad = privacidad,
                 nombrecarrera = nombreCarrera,
-                patrocinadores = listaIds
+                tipoactividad = idtipo
             };
             _dataAccessProvider.AddCarrera(carrera);
+            foreach (string idpatrocinador in patrocinadores.Split("."))
+            {
+                _pats.AddPat(new models.Modelpatrocinadoresporcarrera
+                {
+                    idelemento = nombreCarrera + idpatrocinador,
+                    patrocinador = int.Parse(idpatrocinador),
+                    nombrecarrerafk = nombreCarrera
+                });
+            }
+            foreach (string idcat in categorias.Split("."))
+            {
+                _cats.Addcat(new models.Modelcategoriasporcarrera
+                {
+                    idelemento = nombreCarrera + idcat,
+                    categoria = int.Parse(idcat),
+                    nombrecarrerafk = nombreCarrera
+                });
+            }
         }
 
         [HttpGet("{nombreCarrera}")]

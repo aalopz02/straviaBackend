@@ -18,6 +18,9 @@ namespace straviaBackend.models
         public DbSet<ModelCategoria> categorias { get; set; }
         public DbSet<ModelPatrocinador> patrocinadores { get; set; }
         public DbSet<ModelTipoActividad> tiposactividades { get; set; }
+        public DbSet<Modelcategoriasporcarrera> categoriasporcarrera { get; set; }
+        public DbSet<Modelpatrocinadoresporcarrera> patrocinadoresporcarrera { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
