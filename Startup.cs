@@ -27,7 +27,7 @@ namespace Strava2._0Api
         }
 
         public IConfiguration Configuration { get; }
-
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -43,21 +43,32 @@ namespace Strava2._0Api
             services.AddScoped<IUsuarioAccessInterface, UsuarioAccess>();
             services.AddScoped<ICatAccessInterface, CatAccess>();
             services.AddScoped<IPatAccessInterface, PatAccess>();
-            
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("https://localhost:5001")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
+            });
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseRouting();
+            app.UseCors("AllowAll");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();
-
-            app.UseRouting();
 
             app.UseAuthorization();
 

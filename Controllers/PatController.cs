@@ -19,6 +19,7 @@ namespace straviaBackend.Controllers
         {
             _dataAccessProvider = dataAccessProvider;
         }
+
         //https://localhost:44379/api/Pat/1
         [HttpGet("{idpat}")]
         public ModelPatrocinador Get(int idpat)

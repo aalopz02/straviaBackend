@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using models;
 using straviaBackend.interfaces;
 
-
 namespace straviaBackend.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     public class CarrerasController : ControllerBase
     {
@@ -32,10 +33,13 @@ namespace straviaBackend.Controllers
         {
             return _dataAccessProvider.GetCarreras();
         }
+
+
         //https://localhost:44379/api/Carreras?nombreCarrera=lacarrera&Costo=12345&Cuenta=1234567890&Fecha=fecha&privacidad=publico&idtipo=1&ruta=0&patrocinadores=1.2&categorias=1.2.3
-        [HttpPost]
-        public void AddCarrera(String nombreCarrera,int Costo,int Cuenta,String Fecha,String privacidad, int idtipo, byte[] ruta,String patrocinadores,String categorias)
+        [HttpPost]//String nombreCarrera,int Costo,int Cuenta,String Fecha,String privacidad, int idtipo, byte[] ruta,String patrocinadores,String categorias
+        public void AddCarrera(String nombreCarrera, int Costo, int Cuenta, String Fecha, String privacidad, int idtipo, byte[] ruta, String patrocinadores, String categorias)
         {
+
             ModelCarrera carrera = new ModelCarrera
             {
                 costo = Costo,
@@ -51,18 +55,18 @@ namespace straviaBackend.Controllers
             {
                 _pats.AddPat(new models.Modelpatrocinadoresporcarrera
                 {
-                    idelemento = nombreCarrera + idpatrocinador,
+                    idelemento = carrera.nombrecarrera + idpatrocinador,
                     patrocinador = int.Parse(idpatrocinador),
-                    nombrecarrerafk = nombreCarrera
+                    nombrecarrerafk = carrera.nombrecarrera
                 });
             }
             foreach (string idcat in categorias.Split("."))
             {
                 _cats.Addcat(new models.Modelcategoriasporcarrera
                 {
-                    idelemento = nombreCarrera + idcat,
+                    idelemento = carrera.nombrecarrera + idcat,
                     categoria = int.Parse(idcat),
-                    nombrecarrerafk = nombreCarrera
+                    nombrecarrerafk = carrera.nombrecarrera
                 });
             }
         }

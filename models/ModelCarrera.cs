@@ -15,9 +15,6 @@ namespace models {
 
         public byte[] ruta { get; set; }
 
-        //[ForeignKey("idact")]
-        //public ModelTipoActividad tiposactividades { get; set; }
-
         public int tipoactividad { get; set; }
 
         public String privacidad { get; set; }
