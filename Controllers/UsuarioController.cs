@@ -19,6 +19,12 @@ namespace straviaBackend.Controllers
         {
             _dataAccessProvider = dataAccessProvider;
         }
+        //https://localhost:44379/api/Usuario/aalopz01
+        [HttpGet("{NombreUsuario}")]
+        public ModelUsuario Get(String NombreUsuario)
+        {
+            return _dataAccessProvider.GetUsuario(NombreUsuario);
+        }
 
         [HttpGet("{nombreusuario}")]
         public ModelUsuario GetUsuario(string nombreusuario)
@@ -46,7 +52,7 @@ namespace straviaBackend.Controllers
         }
         /*
         [HttpGet]
-        public IEnumerable<ModelUsuario> Get()
+        public IEnumerable<ModelUsuario> GetAll()
         {
             return _dataAccessProvider.GetUsuarios();
         }

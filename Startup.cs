@@ -27,14 +27,14 @@ namespace Strava2._0Api
         }
 
         public IConfiguration Configuration { get; }
-
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(c =>  
             {  
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());  
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());  
             });  
             
             services.AddControllers();
@@ -42,13 +42,23 @@ namespace Strava2._0Api
 
             services.AddDbContext<StravaContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=stravia2.0;User Id=postgres;Password=1234;"));
 
+            
+            services.AddScoped<ITipoActAccessInterface, TipoActAccess>();
+            services.AddScoped<ICategoriasporCarreraAccessInterface, CategoriasporCarreraAccess>();
+            services.AddScoped<IPatrociandorporCarreraAccessInterface, PatrocinadoresporCarreraAccess>();
             services.AddScoped<ICarreraAccessInterface, CarreraAccess>();
             services.AddScoped<IUsuarioAccessInterface, UsuarioAccess>();
+            services.AddScoped<ICatAccessInterface, CatAccess>();
+            services.AddScoped<IPatAccessInterface, PatAccess>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseRouting();
+            app.UseCors("AllowAll");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,8 +68,6 @@ namespace Strava2._0Api
 
 
             app.UseHttpsRedirection();
-
-            app.UseRouting();
 
             app.UseAuthorization();
 
