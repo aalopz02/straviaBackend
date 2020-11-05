@@ -44,5 +44,11 @@ namespace straviaBackend.AccessImpl
             }
             return result;
         }
+
+        public void Update(Modelpatrocinadoresporcarrera pat)
+        {
+            _context.patrocinadoresporcarrera.Update(pat);
+            _context.SaveChanges();
+        }
     }
 }

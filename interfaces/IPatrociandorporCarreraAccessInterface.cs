@@ -12,5 +12,6 @@ namespace straviaBackend.interfaces
         void DeletePat(int patrocinador,string nombrecarrera);
         List<Modelpatrocinadoresporcarrera> GetPats();
         List<Modelpatrocinadoresporcarrera> GetModelpatrocinadoresporcarrera(string nombrecarrera);
+        public void Update(Modelpatrocinadoresporcarrera pat);
     }
 }

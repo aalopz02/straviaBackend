@@ -46,5 +46,11 @@ namespace straviaBackend.AccessImpl
             }
             return result;
         }
+
+        public void Update(Modelcategoriasporcarrera cat)
+        {
+            _context.categoriasporcarrera.Update(cat);
+            _context.SaveChanges();
+        }
     }
 }

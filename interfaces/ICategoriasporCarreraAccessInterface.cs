@@ -12,5 +12,6 @@ namespace straviaBackend.interfaces
         void DeleteCat(int categoria, string nombrecarrera);
         List<Modelcategoriasporcarrera> GetAll();
         List<Modelcategoriasporcarrera> GetCats(string nombrecarrera);
+        void Update(Modelcategoriasporcarrera cat);
     }
 }

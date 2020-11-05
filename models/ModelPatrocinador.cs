@@ -17,7 +17,7 @@ namespace straviaBackend.models
 
         public int telefono { get; set; }
 
-        public byte[] logo { get; set; }
+  //      public byte[] logo { get; set; }
 
     }
 }

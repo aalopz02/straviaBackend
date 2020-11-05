@@ -39,7 +39,6 @@ namespace straviaBackend.Controllers
         [HttpPost]//String nombreCarrera,int Costo,int Cuenta,String Fecha,String privacidad, int idtipo, byte[] ruta,String patrocinadores,String categorias
         public void AddCarrera(String nombreCarrera, int Costo, int Cuenta, String Fecha, String privacidad, int idtipo, byte[] ruta, String patrocinadores, String categorias)
         {
-
             ModelCarrera carrera = new ModelCarrera
             {
                 costo = Costo,
@@ -78,10 +77,38 @@ namespace straviaBackend.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit([FromBody] ModelCarrera carrera) 
+        public IActionResult Edit(String nombreCarrera, int Costo, int Cuenta, String Fecha, String privacidad, int idtipo, byte[] ruta, String patrocinadores, String categorias) 
         {
             if (ModelState.IsValid)
             {
+                ModelCarrera carrera = new ModelCarrera
+                {
+                    costo = Costo,
+                    cuentapago = Cuenta,
+                    fecha = Fecha,
+                    ruta = ruta,
+                    privacidad = privacidad,
+                    nombrecarrera = nombreCarrera,
+                    tipoactividad = idtipo
+                };
+                foreach (string idpatrocinador in patrocinadores.Split("."))
+                {
+                    _pats.Update(new models.Modelpatrocinadoresporcarrera
+                    {
+                        idelemento = carrera.nombrecarrera + idpatrocinador,
+                        patrocinador = int.Parse(idpatrocinador),
+                        nombrecarrerafk = carrera.nombrecarrera
+                    });
+                }
+                foreach (string idcat in categorias.Split("."))
+                {
+                    _cats.Update(new models.Modelcategoriasporcarrera
+                    {
+                        idelemento = carrera.nombrecarrera + idcat,
+                        categoria = int.Parse(idcat),
+                        nombrecarrerafk = carrera.nombrecarrera
+                    });
+                }
                 _dataAccessProvider.UpdateCarrera(carrera);
                 return Ok();
             }
