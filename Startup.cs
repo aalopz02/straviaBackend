@@ -32,10 +32,15 @@ namespace Strava2._0Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(c =>  
+            {  
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());  
+            });  
+            
             services.AddControllers();
             var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
 
-            services.AddDbContext<StravaContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=stravia2.0;User Id=postgres;Password=2098;"));
+            services.AddDbContext<StravaContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=stravia2.0;User Id=postgres;Password=1234;"));
 
             services.AddScoped<ICarreraAccessInterface, CarreraAccess>();
             services.AddScoped<IUsuarioAccessInterface, UsuarioAccess>();
@@ -48,6 +53,9 @@ namespace Strava2._0Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); 
+
 
             app.UseHttpsRedirection();
 

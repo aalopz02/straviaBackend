@@ -23,12 +23,12 @@ namespace straviaBackend.AccessImpl
             _context.SaveChanges();
         }
 
-        public ModelUsuario GetUsuario(string NombreUsuario){
-             return _context.Usuario.FirstOrDefault(t => t.NombreUsuario == NombreUsuario);
+        public ModelUsuario GetUsuario(string nombreusuario){
+            return _context.Usuario.FirstOrDefault(t => t.nombreusuario == nombreusuario);
         }
-
+        /*
         public List<ModelUsuario> GetUsuarios() {
             return _context.Usuario.ToList();
-        }
+        }*/
     }
 }
