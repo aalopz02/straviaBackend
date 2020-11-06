@@ -11,7 +11,7 @@ namespace straviaBackend.interfaces
         void AddUsuario(ModelUsuario usuario);
         void UpdateUsuario(ModelUsuario usuario);
         void DeleteUsuario(string NombreUsuario);
-        List<ModelUsuario> GetUsuarios();
+        List<ModelUsuario> GetUsuarios(string busqueda);
         ModelUsuario GetUsuario(string NombreUsuario);
         
     }

@@ -27,9 +27,9 @@ namespace straviaBackend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ModelUsuario> GetAll()
+        public IEnumerable<ModelUsuario> GetAll(String busqueda)
         {
-            return _dataAccessProvider.GetUsuarios();
+            return _dataAccessProvider.GetUsuarios(busqueda);
         }
 
         [HttpPost]

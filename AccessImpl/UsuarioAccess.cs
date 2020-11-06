@@ -28,8 +28,11 @@ namespace straviaBackend.AccessImpl
             return _context.usuario.FirstOrDefault(t => t.nombreusuario == NombreUsuario);
         }
 
-        public List<ModelUsuario> GetUsuarios() {
-            return _context.usuario.ToList();
+        public List<ModelUsuario> GetUsuarios(string busqueda) {
+            if (busqueda.Equals("all")) {
+                return _context.usuario.ToList();
+            }
+            return _context.usuario.Where(p => p.fname.Contains(busqueda) || p.nombreusuario.Contains(busqueda)).ToList();
         }
 
         void IUsuarioAccessInterface.DeleteUsuario(string NombreUsuario)
