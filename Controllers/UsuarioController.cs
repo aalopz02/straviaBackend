@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using models;
 using straviaBackend.interfaces;
-
+using straviaBackend.mist;
+using straviaBackend.models;
 
 namespace straviaBackend.Controllers
 {
@@ -14,11 +15,15 @@ namespace straviaBackend.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioAccessInterface _dataAccessProvider;
+        private readonly IActividadAccess _actividadAccess;
 
-        public UsuarioController(IUsuarioAccessInterface dataAccessProvider)
+        public UsuarioController(IUsuarioAccessInterface dataAccessProvider,
+                                    IActividadAccess actividadAccess)
         {
             _dataAccessProvider = dataAccessProvider;
+            _actividadAccess = actividadAccess;
         }
+
         //https://localhost:44379/api/Usuario/aalopz01
         [HttpGet("{NombreUsuario}")]
         public ModelUsuario Get(String NombreUsuario)
@@ -27,14 +32,14 @@ namespace straviaBackend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ModelUsuario> GetAll(String busqueda)
+        public IEnumerable<ModelUsuario> GetAll(String busqueda,String usuario)
         {
-            return _dataAccessProvider.GetUsuarios(busqueda);
+            return _dataAccessProvider.GetUsuarios(busqueda, usuario);
         }
 
         [HttpPost]
         public void POSTUsuario(String nombreusuario, String password, String fname,
-        String mname, String lname, String fechaNacimiento, String nacionalidad)
+        String mname, String lname, String fechaNacimiento, String nacionalidad, [FromBody] FileModel img)
         {
             ModelUsuario usuario = new ModelUsuario
             {
@@ -46,8 +51,9 @@ namespace straviaBackend.Controllers
                 fechanacimiento = fechaNacimiento,
                 nacionalidad = nacionalidad,
                 nsiguiendo = 0,
-                nseguidores = 0
-            };
+                nseguidores = 0,
+                imagenperfil = ProcessSaveFiles.saveImg(img, nombreusuario)
+        };
 
             _dataAccessProvider.AddUsuario(usuario);
         }

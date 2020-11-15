@@ -1,4 +1,4 @@
-CREATE TABLE public.carreras
+CREATE TABLE public.carreras////asdcasdc LA DE USUARIO UN ATRIBUTO NULL CHAR VARYING 50 imagenperfil
 (
 	nombrecarrera character varying(50) NOT NULL,
 	costo numeric NOT NULL,
@@ -49,6 +49,14 @@ CREATE TABLE public.tiposactividades
 	CONSTRAINT tiposactividades_pkey PRIMARY KEY (idact)
 );
 
+CREATE TABLE public.seguidores
+(
+	idelemento character varying(50) NOT NULL,
+	nombreusuariofk character varying(50) NOT NULL REFERENCES usuario(nombreusuario),
+	nombreusuariosiguiendofk character varying(50) NOT NULL REFERENCES usuario(nombreusuario),
+	CONSTRAINT idelemento_pkey PRIMARY KEY (idelemento)
+);
+
 INSERT INTO public."categorias"("idcat","nombre","rango")
 VALUES (1,'Junior','menos de 15 años');
 INSERT INTO public."categorias"("idcat","nombre","rango")
@@ -86,3 +94,30 @@ VALUES (6,'Caminata');
 
 SELECT * FROM public."tiposactividades"
 
+VALUES ('adrian03','clave2','adrian','lopez','Vásquez','03-09-1998','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('ldnoguera','clave3','luis','noguera','mena','20-08-1998','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('albino','clave4','albino','ice','aya','12-12-2012','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('charlie','clave5','carlos','alvarado','segundoapellido','20-08-1920','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('gerald02','clave5','gerald','salazar','elizondo','20-08-1998','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('kevin98','clave6','kevin','alanis','Pineda','20-08-1998','cr',0,0);
+
+SELECT nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores
+	FROM public.usuario;
+
+CREATE TABLE public.actividad
+(
+	idactividad character varying(100) NOT NULL,
+	nombreusuariofk character varying(50) REFERENCES usuario(nombreusuario) NOT NULL,
+	fecha DATE NOT NULL,
+	duracionmin numeric NOT NULL,
+	tipoactividad numeric REFERENCES tiposactividades(idact) NOT NULL,
+	distanciakm numeric NOT NULL,
+	recorrido bytea NULL,
+	carreraoreto character varying(50) NULL,
+	CONSTRAINT idactividad_pkey PRIMARY KEY (idactividad)
+);

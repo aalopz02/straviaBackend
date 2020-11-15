@@ -43,6 +43,8 @@ namespace Strava2._0Api
             services.AddScoped<IUsuarioAccessInterface, UsuarioAccess>();
             services.AddScoped<ICatAccessInterface, CatAccess>();
             services.AddScoped<IPatAccessInterface, PatAccess>();
+            services.AddScoped<ISeguidoresAccess, SiguiendoAccess>();
+            services.AddScoped<IActividadAccess, ActividadAccess>();
 
             services.AddCors(options =>
             {
