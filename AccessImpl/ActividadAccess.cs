@@ -27,20 +27,23 @@ namespace straviaBackend.AccessImpl
             return _context.actividad.FirstOrDefault(t => t.idactividad == idactividad);
         }
 
-        public List<ModelActividad> GetActividades(string seguidor)
+        public List<ModelActividadView> GetActividades(string seguidor)
         {
-            List<List<ModelActividad>> matrizActividades = new List<List<ModelActividad>>();
-            List<String> siguiendo = _context.seguidores.Where(t => t.nombreusuariofk == seguidor).Select(t => t.nombreusuariosiguiendofk).ToList();
-            foreach (String user in siguiendo) {
-                matrizActividades.Add(_context.actividad.Where(t => t.nombreusuariofk == user).OrderBy(t=> t.fecha).ToList());
-            }
-            List<ModelActividad> actividades = new List<ModelActividad>();
+            List<string> siguiendos = _context.seguidores.Where(t => t.nombreusuariofk == seguidor).Select(t => t.nombreusuariosiguiendofk).ToList();
+            List<ModelActividad> modelActividades = _context.actividad.Where(t => siguiendos.Contains(t.nombreusuariofk)).OrderBy(t => t.fecha).ToList();
+            List<ModelActividadView> modelsviews = new List<ModelActividadView>();
 
-            for (int i = 0; i < matrizActividades.Count; i++) {
-                actividades.Add(matrizActividades.ElementAt(i).First());
+            foreach (ModelActividad actividad in modelActividades) {
+                modelsviews.Add(new ModelActividadView
+                {
+                    nombreusuario = actividad.nombreusuariofk,
+                    distancia = actividad.distanciakm,
+                    tipoactividad = _context.tiposactividades.FirstOrDefault(t  => t.idact == actividad.tipoactividad).nombre,
+                    rutagpx = actividad.dirrecorrido
+                }) ;
             }
 
-            return actividades;
+            return modelsviews;
         }
     }
 }

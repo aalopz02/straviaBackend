@@ -18,7 +18,7 @@ namespace straviaBackend.models
 		public int duracionmin { get; set; }
 		public int tipoactividad { get; set; }
 		public int distanciakm { get; set; }
-		public byte[] recorrido { get; set; }
+		public string dirrecorrido { get; set; }
 		public String carreraoreto { get; set; }
 
 	}

@@ -10,7 +10,7 @@ namespace straviaBackend.interfaces
     {
         void AddActividad(ModelActividad actividad);
         ModelActividad GetActividad(string idactividad);
-        List<ModelActividad> GetActividades(string nombreusuario);
+        List<ModelActividadView> GetActividades(string nombreusuario);
 
     }
 }

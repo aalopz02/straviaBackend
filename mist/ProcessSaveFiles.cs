@@ -9,9 +9,10 @@ namespace straviaBackend.mist
 {
     public class ProcessSaveFiles
     {
-        private static string url = "D://OneDrive//Escritorio//imgrepo//";
+        private static string url = "D://OneDrive//Escritorio//";
 
         public static string saveImg(FileModel inFile, string username) {
+
             string content = inFile.file;
             //data:image/jpeg;base64, => metadata , indica donde inicia
             string[] decoDiv = content.Split(",");

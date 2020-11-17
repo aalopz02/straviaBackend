@@ -54,7 +54,7 @@ namespace straviaBackend.Controllers
                 nseguidores = 0,
                 imagenperfil = ProcessSaveFiles.saveImg(img, nombreusuario)
         };
-
+            int x = 1;
             _dataAccessProvider.AddUsuario(usuario);
         }
 

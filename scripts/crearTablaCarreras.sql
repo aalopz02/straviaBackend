@@ -2,11 +2,11 @@ CREATE TABLE public.carreras////asdcasdc LA DE USUARIO UN ATRIBUTO NULL CHAR VAR
 (
 	nombrecarrera character varying(50) NOT NULL,
 	costo numeric NOT NULL,
-	ruta bytea NULL,
+	dirruta character varying(50) NULL,
 	tipoactividad numeric REFERENCES tiposactividades(idact),
 	privacidad character varying(50),
-	fecha character varying(50) NOT NULL,
-	cuentapago numeric NOT NULL,
+	fecha DATE NOT NULL,
+	cuentapago numeric NOT NULL
 	CONSTRAINT carreras_pkey PRIMARY KEY (nombrecarrera)
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE public.patrocinadores
 	nombre character varying(500) NOT NULL,
 	representante character varying(100) NOT NULL,
 	telefono numeric NOT NULL,
-	logo bytea NULL,
+	dirlogo character varying(50) NULL,
 	CONSTRAINT patrocinadores_pkey PRIMARY KEY (idpat)
 );
 
@@ -117,7 +117,7 @@ CREATE TABLE public.actividad
 	duracionmin numeric NOT NULL,
 	tipoactividad numeric REFERENCES tiposactividades(idact) NOT NULL,
 	distanciakm numeric NOT NULL,
-	recorrido bytea NULL,
+	dirrecorrido character varying(50) NULL,
 	carreraoreto character varying(50) NULL,
 	CONSTRAINT idactividad_pkey PRIMARY KEY (idactividad)
 );

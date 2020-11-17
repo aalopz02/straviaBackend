@@ -32,7 +32,7 @@ namespace straviaBackend.Controllers
         }
 
         [HttpGet("{seguidor}")]
-        public IEnumerable<ModelActividad> GetAll(string seguidor)
+        public IEnumerable<ModelActividadView> GetAll(string seguidor)
         {
             return _dataAccessProvider.GetActividades(seguidor);
         }
