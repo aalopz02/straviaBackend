@@ -25,12 +25,14 @@ namespace straviaBackend.AccessImpl
             _context.SaveChanges();
         }
 
-        public ModelUsuario GetUsuario(string nombreusuario){
-            return _context.Usuario.FirstOrDefault(t => t.nombreusuario == nombreusuario);
+        public ModelUsuario GetUsuario(string nombreusuario) {
+            return _context.usuario.FirstOrDefault(t => t.nombreusuario == nombreusuario);
+        }
 
-        
-        public List<ModelUsuario> GetUsuarios() {
+        public List<ModelUsuario> GetUsuarios()
+        {
             return _context.usuario.ToList();
+        }
             
         public List<ModelUsuario> GetUsuarios(string busqueda, string usuario) {
             //aca quitar a los que ya sigue
