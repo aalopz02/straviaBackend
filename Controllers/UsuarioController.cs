@@ -31,12 +31,37 @@ namespace straviaBackend.Controllers
             return _dataAccessProvider.GetUsuario(NombreUsuario);
         }
 
+        [HttpGet("{nombreusuario}")]
+        public ModelUsuario GetUsuario(string nombreusuario)
+        {
+            return _dataAccessProvider.GetUsuario(nombreusuario);
+        }
+
+        [HttpPost("CheckUsuario")]
+        
+        public bool CheckUsuario([FromBody] UserLoginModel data)
+        {
+            
+            if(data.nombreusuario != null){
+                var usuario = _dataAccessProvider.GetUsuario(data.nombreusuario);
+                
+                if(usuario.contraseña == data.contraseña){
+                    Console.WriteLine("Alooooooooo");
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+        /*
         [HttpGet]
         public IEnumerable<ModelUsuario> GetAll(String busqueda,String usuario)
         {
             return _dataAccessProvider.GetUsuarios(busqueda, usuario);
         }
-
+        */
         [HttpPost]
         public void POSTUsuario(String nombreusuario, String password, String fname,
         String mname, String lname, String fechaNacimiento, String nacionalidad, [FromBody] FileModel img)
