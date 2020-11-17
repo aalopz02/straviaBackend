@@ -121,3 +121,18 @@ CREATE TABLE public.actividad
 	carreraoreto character varying(50) NULL,
 	CONSTRAINT idactividad_pkey PRIMARY KEY (idactividad)
 );
+
+CREATE TABLE public.actividad
+(
+	nombreusuario character varying(50) NOT NULL,
+	contraseña character varying(500)  NOT NULL,
+	fname character varying(50) NOT NULL,
+	mnane character varying(50) NOT NULL,
+	lname character varying(50) NOT NULL,
+	fecha character varying(50) NOT NULL,
+	nacionalidad character varying(50) NULL,
+	nsiguiendo numeric NOT NULL,
+	nseguidores numeric NOT NULL,
+	imagenperfil character varying(50) NOT NULL,
+	CONSTRAINT nombreusuario_pkey PRIMARY KEY (nombreusuario)
+);

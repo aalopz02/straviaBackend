@@ -33,16 +33,43 @@ namespace straviaBackend.AccessImpl
         {
             return _context.usuario.ToList();
         }
-            
-        public List<ModelUsuario> GetUsuarios(string busqueda, string usuario) {
-            //aca quitar a los que ya sigue
-            if (busqueda.Equals("all")) {
-                return _context.usuario.Where(p => !p.nombreusuario.Equals(usuario)).ToList();
-            }
-            List<ModelUsuario> lista = _context.usuario.Where(p => (p.fname.Contains(busqueda) || p.nombreusuario.Contains(busqueda)) && (!p.nombreusuario.Equals(usuario))).ToList();
-            return _context.usuario.Where(p => (p.fname.Contains(busqueda) || p.nombreusuario.Contains(busqueda)) && (!p.nombreusuario.Equals(usuario))).ToList();
-        }
 
+        /// <summary>
+        /// https://localhost:44379/api/Usuario?busqueda=all&usuario=aalopz02
+        /// </summary>
+        /// <param name="busqueda"></param>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
+        /// 
+        public List<ModelSearchUserView> GetUsuarios(string busqueda, string usuario) {
+            List<ModelUsuario> lista;
+            if (busqueda.Equals("all"))
+            {
+                lista = _context.usuario.Where(p => !p.nombreusuario.Equals(usuario)).ToList();
+            }
+            else { 
+                lista = lista = _context.usuario.Where(p => (p.fname.Contains(busqueda) || p.nombreusuario.Contains(busqueda)) && (!p.nombreusuario.Equals(usuario))).ToList();
+            }
+            List<ModelSearchUserView> usersviewmodel = new List<ModelSearchUserView>();
+            List<String> siguiendo = _context.seguidores.Where(t => t.nombreusuariofk == usuario).Select(t => t.nombreusuariosiguiendofk).ToList();
+            foreach (ModelUsuario user in lista) {
+                bool losigue = siguiendo.Contains(user.nombreusuario);
+                ModelSearchUserView modelSearchUser = new ModelSearchUserView
+                {
+                    nombreusuario = user.nombreusuario,
+                    imagenperfil = user.imagenperfil,
+                    nacionalidad = user.nacionalidad,
+                    fname = user.fname,
+                    mname = user.mname,
+                    lname = user.lname,
+                    siguiendo = losigue
+                };
+                usersviewmodel.Add(modelSearchUser);
+            }
+
+            return usersviewmodel;
+
+        }
         void IUsuarioAccessInterface.DeleteUsuario(string NombreUsuario)
         {
             throw new NotImplementedException();

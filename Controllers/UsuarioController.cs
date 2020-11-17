@@ -25,16 +25,17 @@ namespace straviaBackend.Controllers
         }
 
         //https://localhost:44379/api/Usuario/aalopz01
-        [HttpGet("{NombreUsuario}")]
-        public ModelUsuario Get(String NombreUsuario)
-        {
-            return _dataAccessProvider.GetUsuario(NombreUsuario);
-        }
 
         [HttpGet("{nombreusuario}")]
         public ModelUsuario GetUsuario(string nombreusuario)
         {
             return _dataAccessProvider.GetUsuario(nombreusuario);
+        }
+
+        [HttpGet]
+        public IEnumerable<ModelSearchUserView> GetAll(String busqueda, String usuario)
+        {
+            return _dataAccessProvider.GetUsuarios(busqueda, usuario);
         }
 
         [HttpPost("CheckUsuario")]
@@ -55,13 +56,7 @@ namespace straviaBackend.Controllers
                 return false;
             }
         }
-        /*
-        [HttpGet]
-        public IEnumerable<ModelUsuario> GetAll(String busqueda,String usuario)
-        {
-            return _dataAccessProvider.GetUsuarios(busqueda, usuario);
-        }
-        */
+
         [HttpPost]
         public void POSTUsuario(String nombreusuario, String password, String fname,
         String mname, String lname, String fechaNacimiento, String nacionalidad, [FromBody] FileModel img)

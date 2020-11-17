@@ -39,7 +39,9 @@ namespace straviaBackend.Controllers
 
         //https://localhost:44379/api/Actividad?nombreusuario=aalopz02&date=2006-01-01&duracion=60&idact=2&distancia=10&tipo=reto
         [HttpPost]
-        public void AddActividad(string nombreusuario,string date,int duracion,int idact,int distancia,string tipo) {
+        public void AddActividad(string nombreusuario, string date, int duracion, int idact, int distancia, string tipo, [FromBody] FileModel ruta)
+        {
+            string dirruta = mist.ProcessSaveFiles.saveRuta(ruta, nombreusuario, date);
             _dataAccessProvider.AddActividad(new ModelActividad
             {
                 nombreusuariofk = nombreusuario,
@@ -48,8 +50,10 @@ namespace straviaBackend.Controllers
                 duracionmin = duracion,
                 tipoactividad = idact,
                 distanciakm = distancia,
-                carreraoreto = tipo
+                carreraoreto = tipo,
+                dirrecorrido = dirruta
             }) ; 
+            
         }
     }
 }
