@@ -25,6 +25,7 @@ namespace models {
 
         public int nseguidores { get; set; }
 
+        public String imagenperfil { get; set; }
 
     }
 }

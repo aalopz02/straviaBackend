@@ -26,7 +26,7 @@ namespace straviaBackend.Controllers
             _dataAccessProvider = dataAccessProvider;
             _pats = pats;
             _cats = cats;
-    }
+        }
 
         [HttpGet]
         public IEnumerable<ModelCarrera> Get()
