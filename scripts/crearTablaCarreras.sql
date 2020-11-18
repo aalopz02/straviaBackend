@@ -1,12 +1,12 @@
-CREATE TABLE public.carreras
+CREATE TABLE public.carreras////asdcasdc LA DE USUARIO UN ATRIBUTO NULL CHAR VARYING 50 imagenperfil
 (
 	nombrecarrera character varying(50) NOT NULL,
 	costo numeric NOT NULL,
-	ruta bytea NULL,
+	dirruta character varying(50) NULL,
 	tipoactividad numeric REFERENCES tiposactividades(idact),
 	privacidad character varying(50),
-	fecha character varying(50) NOT NULL,
-	cuentapago numeric NOT NULL,
+	fecha DATE NOT NULL,
+	cuentapago numeric NOT NULL
 	CONSTRAINT carreras_pkey PRIMARY KEY (nombrecarrera)
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE public.patrocinadores
 	nombre character varying(500) NOT NULL,
 	representante character varying(100) NOT NULL,
 	telefono numeric NOT NULL,
-	logo bytea NULL,
+	dirlogo character varying(50) NULL,
 	CONSTRAINT patrocinadores_pkey PRIMARY KEY (idpat)
 );
 
@@ -57,6 +57,14 @@ CREATE TABLE public.tiposactividades
 	idact numeric NOT NULL,
 	nombre character varying(500) NOT NULL,
 	CONSTRAINT tiposactividades_pkey PRIMARY KEY (idact)
+);
+
+CREATE TABLE public.seguidores
+(
+	idelemento character varying(50) NOT NULL,
+	nombreusuariofk character varying(50) NOT NULL REFERENCES usuario(nombreusuario),
+	nombreusuariosiguiendofk character varying(50) NOT NULL REFERENCES usuario(nombreusuario),
+	CONSTRAINT idelemento_pkey PRIMARY KEY (idelemento)
 );
 
 INSERT INTO public."categorias"("idcat","nombre","rango")
@@ -96,3 +104,55 @@ VALUES (6,'Caminata');
 
 SELECT * FROM public."tiposactividades"
 
+VALUES ('adrian03','clave2','adrian','lopez','Vásquez','03-09-1998','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('ldnoguera','clave3','luis','noguera','mena','20-08-1998','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('albino','clave4','albino','ice','aya','12-12-2012','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('charlie','clave5','carlos','alvarado','segundoapellido','20-08-1920','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('gerald02','clave5','gerald','salazar','elizondo','20-08-1998','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('kevin98','clave6','kevin','alanis','Pineda','20-08-1998','cr',0,0);
+
+SELECT nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores
+	FROM public.usuario;
+
+CREATE TABLE public.actividad
+(
+	idactividad character varying(100) NOT NULL,
+	nombreusuariofk character varying(50) REFERENCES usuario(nombreusuario) NOT NULL,
+	fecha DATE NOT NULL,
+	duracionmin numeric NOT NULL,
+	tipoactividad numeric REFERENCES tiposactividades(idact) NOT NULL,
+	distanciakm numeric NOT NULL,
+	dirrecorrido character varying(50) NULL,
+	carreraoreto character varying(50) NULL,
+	CONSTRAINT idactividad_pkey PRIMARY KEY (idactividad)
+);
+
+CREATE TABLE public.actividad
+(
+	nombreusuario character varying(50) NOT NULL,
+	contraseña character varying(500)  NOT NULL,
+	fname character varying(50) NOT NULL,
+	mnane character varying(50) NOT NULL,
+	lname character varying(50) NOT NULL,
+	fecha character varying(50) NOT NULL,
+	nacionalidad character varying(50) NULL,
+	nsiguiendo numeric NOT NULL,
+	nseguidores numeric NOT NULL,
+	imagenperfil character varying(50) NOT NULL,
+	CONSTRAINT nombreusuario_pkey PRIMARY KEY (nombreusuario)
+);
+	
+INSERT INTO public.actividad(
+	idactividad, nombreusuariofk, fecha, duracionmin, tipoactividad, distanciakm, carreraoreto, dirrecorrido)
+	VALUES ('ldnoguera2020-11-12', 'ldnoguera', '2020-11-12', 12, 1, 12, 'carrera', 'ldnoguera2020-11-12.gpx');
+INSERT INTO public.actividad(
+	idactividad, nombreusuariofk, fecha, duracionmin, tipoactividad, distanciakm, carreraoreto, dirrecorrido)
+	VALUES ('ldnoguera2020-11-10', 'ldnoguera', '2020-11-10', 10, 2, 14, 'carrera', 'ldnoguera2020-11-10.gpx');
+INSERT INTO public.actividad(
+	idactividad, nombreusuariofk, fecha, duracionmin, tipoactividad, distanciakm, carreraoreto, dirrecorrido)
+	VALUES ('adrian032020-11-01', 'adrian03', '2020-11-01', 11, 1, 44, 'carrera', 'adrian032020-11-01.gpx');

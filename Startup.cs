@@ -32,10 +32,17 @@ namespace Strava2._0Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(c =>  
+            {  
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());  
+            });  
+            
             services.AddControllers();
             var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
 
             services.AddDbContext<StravaContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=stravia2.0;User Id=postgres;Password=2098;"));
+
+            
             services.AddScoped<ITipoActAccessInterface, TipoActAccess>();
             services.AddScoped<ICategoriasporCarreraAccessInterface, CategoriasporCarreraAccess>();
             services.AddScoped<IPatrociandorporCarreraAccessInterface, PatrocinadoresporCarreraAccess>();
@@ -43,6 +50,8 @@ namespace Strava2._0Api
             services.AddScoped<IUsuarioAccessInterface, UsuarioAccess>();
             services.AddScoped<ICatAccessInterface, CatAccess>();
             services.AddScoped<IPatAccessInterface, PatAccess>();
+            services.AddScoped<ISeguidoresAccess, SiguiendoAccess>();
+            services.AddScoped<IActividadAccess, ActividadAccess>();
             services.AddScoped<IRetoAccessInterface, RetoAccess>();
             services.AddScoped<IGrupoAccessInterface, GrupoAccess>();
             services.AddScoped<IInscripcionCarreraAccessInterface, InscripcionCarreraAccess>();
@@ -70,6 +79,9 @@ namespace Strava2._0Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); 
+
 
             app.UseHttpsRedirection();
 

@@ -1,8 +1,10 @@
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using models;
 using straviaBackend.interfaces;
 using straviaBackend.models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,18 +25,51 @@ namespace straviaBackend.AccessImpl
             _context.SaveChanges();
         }
 
-        public ModelUsuario GetUsuario(string NombreUsuario){
-
-            return _context.usuario.FirstOrDefault(t => t.nombreusuario == NombreUsuario);
+        public ModelUsuario GetUsuario(string nombreusuario) {
+            return _context.usuario.FirstOrDefault(t => t.nombreusuario == nombreusuario);
         }
 
-        public List<ModelUsuario> GetUsuarios(string busqueda) {
-            if (busqueda.Equals("all")) {
-                return _context.usuario.ToList();
+        public List<ModelUsuario> GetUsuarios()
+        {
+            return _context.usuario.ToList();
+        }
+
+        /// <summary>
+        /// https://localhost:44379/api/Usuario?busqueda=all&usuario=aalopz02
+        /// </summary>
+        /// <param name="busqueda"></param>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
+        /// 
+        public List<ModelSearchUserView> GetUsuarios(string busqueda, string usuario) {
+            List<ModelUsuario> lista;
+            if (busqueda.Equals("all"))
+            {
+                lista = _context.usuario.Where(p => !p.nombreusuario.Equals(usuario)).ToList();
             }
-            return _context.usuario.Where(p => p.fname.Contains(busqueda) || p.nombreusuario.Contains(busqueda)).ToList();
-        }
+            else { 
+                lista = lista = _context.usuario.Where(p => (p.fname.Contains(busqueda) || p.nombreusuario.Contains(busqueda)) && (!p.nombreusuario.Equals(usuario))).ToList();
+            }
+            List<ModelSearchUserView> usersviewmodel = new List<ModelSearchUserView>();
+            List<String> siguiendo = _context.seguidores.Where(t => t.nombreusuariofk == usuario).Select(t => t.nombreusuariosiguiendofk).ToList();
+            foreach (ModelUsuario user in lista) {
+                bool losigue = siguiendo.Contains(user.nombreusuario);
+                ModelSearchUserView modelSearchUser = new ModelSearchUserView
+                {
+                    nombreusuario = user.nombreusuario,
+                    imagenperfil = user.imagenperfil,
+                    nacionalidad = user.nacionalidad,
+                    fname = user.fname,
+                    mname = user.mname,
+                    lname = user.lname,
+                    siguiendo = losigue
+                };
+                usersviewmodel.Add(modelSearchUser);
+            }
 
+            return usersviewmodel;
+
+        }
         void IUsuarioAccessInterface.DeleteUsuario(string NombreUsuario)
         {
             throw new NotImplementedException();
@@ -42,7 +77,8 @@ namespace straviaBackend.AccessImpl
 
         void IUsuarioAccessInterface.UpdateUsuario(ModelUsuario usuario)
         {
-            throw new NotImplementedException();
+            _context.usuario.Update(usuario);
+            _context.SaveChanges();
         }
     }
 }
