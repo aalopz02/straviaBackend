@@ -12,7 +12,7 @@ namespace models {
 
         public String nombreusuario { get; set; }
 
-        public byte[] recibo { get; set; }
+        public String recibo { get; set; }
 
         [Key]
         public String idinscar { get; set; }

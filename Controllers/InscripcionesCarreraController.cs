@@ -28,8 +28,6 @@ namespace straviaBackend.Controllers
             _cats = cats;
         }
 
-
-
         //https://localhost:44379/api/InscripcionCarrera?nombreCarrera=lacarrera&nombreUsuario=nombre
         [HttpPost]//String nombreCarrera,String nombreUsuario
         public void AddInscripcionCarrera(String nombreCarrera, String nombreUsuario)

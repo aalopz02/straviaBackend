@@ -156,3 +156,21 @@ INSERT INTO public.actividad(
 INSERT INTO public.actividad(
 	idactividad, nombreusuariofk, fecha, duracionmin, tipoactividad, distanciakm, carreraoreto, dirrecorrido)
 	VALUES ('adrian032020-11-01', 'adrian03', '2020-11-01', 11, 1, 44, 'carrera', 'adrian032020-11-01.gpx');
+
+
+CREATE TABLE public.inscripcioncarreras
+(
+	nombrecarrera character varying(50) NOT NULL REFERENCES carreras(nombrecarrera),
+	nombreusuario character varying(50) NOT NULL REFERENCES usuario(nombreusuario),
+	recibo character varying(50) NULL,
+	idinscar character varying(50),
+	CONSTRAINT inscripcioncarreras_pkey PRIMARY KEY (idinscar)
+);
+
+CREATE TABLE public.inscripcionretos
+(
+	nombrecarrera character varying(50) NOT NULL REFERENCES carreras(nombrecarrera),
+	nombreusuario character varying(50) NOT NULL REFERENCES usuario(nombreusuario),
+	idinsret character varying(50),
+	CONSTRAINT inscripcionretos_pkey PRIMARY KEY (idinsret)
+);

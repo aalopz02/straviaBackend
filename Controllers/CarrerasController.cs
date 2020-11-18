@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using models;
 using straviaBackend.interfaces;
+using straviaBackend.models;
 
 namespace straviaBackend.Controllers
 {
@@ -29,15 +30,14 @@ namespace straviaBackend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ModelCarrera> Get()
+        public IEnumerable<ModelCarreraView> Get(string username)
         {
-            return _dataAccessProvider.GetCarreras();
+            return _dataAccessProvider.GetCarrerasForUser(username);
         }
-
 
         //https://localhost:44379/api/Carreras?nombreCarrera=lacarrera&Costo=12345&Cuenta=1234567890&Fecha=fecha&privacidad=publico&idtipo=1&ruta=0&patrocinadores=1.2&categorias=1.2.3
         [HttpPost]//String nombreCarrera,int Costo,int Cuenta,String Fecha,String privacidad, int idtipo, byte[] ruta,String patrocinadores,String categorias
-        public void AddCarrera(String nombreCarrera, int Costo, int Cuenta, String Fecha, String privacidad, int idtipo, byte[] ruta, String patrocinadores, String categorias)
+        public void AddCarrera(String nombreCarrera, int Costo, int Cuenta, String Fecha, String privacidad, int idtipo, string ruta, String patrocinadores, String categorias)
         {
             ModelCarrera carrera = new ModelCarrera
             {
@@ -77,7 +77,7 @@ namespace straviaBackend.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit(String nombreCarrera, int Costo, int Cuenta, String Fecha, String privacidad, int idtipo, byte[] ruta, String patrocinadores, String categorias) 
+        public IActionResult Edit(String nombreCarrera, int Costo, int Cuenta, String Fecha, String privacidad, int idtipo, string ruta, String patrocinadores, String categorias) 
         {
             if (ModelState.IsValid)
             {

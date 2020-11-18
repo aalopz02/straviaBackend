@@ -40,10 +40,6 @@ namespace straviaBackend.mist
         {
             string content = inFile.file;
             byte[] data = Encoding.ASCII.GetBytes(content);
-            //data:image/jpeg;base64, => metadata , indica donde inicia
-            //string[] decoDiv = content.Split(",");
-            //string fileType = decoDiv[0].Split("/")[1].Split(";")[0];
-            //byte[] data = System.Convert.FromBase64String(decoDiv[1]);
             string name = username + date + ".gpx";
             try
             {

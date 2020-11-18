@@ -40,6 +40,31 @@ namespace straviaBackend.AccessImpl
             return _context.carreras.ToList();
         }
 
+        public List<ModelCarreraView> GetCarrerasForUser(string username)
+        {
+            List<String> listaCarrerasInscrito = _context.inscripcioncarreras.Where(t => t.nombreusuario == username).Select(t => t.nombreusuario).ToList();
+            List<ModelCarrera> allcarreras = _context.carreras.ToList();
+            List<ModelCarreraView> listaend = new List<ModelCarreraView>();
+            foreach (ModelCarrera carrera in allcarreras)
+            {/
+                int idpat = _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador;
+                int idcat = _context.categoriasporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).categoria;
+                listaend.Add(new ModelCarreraView
+                {
+                    nombrecarrera = carrera.nombrecarrera,
+                    costo = carrera.costo,
+                    fecha = carrera.fecha,
+                    tipoactividad = _context.tiposactividades.FirstOrDefault(t => t.idact == carrera.tipoactividad).nombre,
+                    patrocinador = _context.patrocinadores.FirstOrDefault(t => t.idpat == idpat).nombre,
+                    categoria = _context.categorias.FirstOrDefault(t => t.idcat == idcat).nombre,
+                    suscrito = _context.inscripcioncarreras.Where(t => t.nombrecarrera == carrera.nombrecarrera).ToList().Count() != 0
+
+                });
+               
+            }
+            return listaend;
+        }
+
         public void UpdateCarrera(ModelCarrera carrera)
         {
             _context.carreras.Update(carrera);
