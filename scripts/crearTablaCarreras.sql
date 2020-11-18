@@ -136,3 +136,13 @@ CREATE TABLE public.actividad
 	imagenperfil character varying(50) NOT NULL,
 	CONSTRAINT nombreusuario_pkey PRIMARY KEY (nombreusuario)
 );
+	
+INSERT INTO public.actividad(
+	idactividad, nombreusuariofk, fecha, duracionmin, tipoactividad, distanciakm, carreraoreto, dirrecorrido)
+	VALUES ('ldnoguera2020-11-12', 'ldnoguera', '2020-11-12', 12, 1, 12, 'carrera', 'ldnoguera2020-11-12.gpx');
+INSERT INTO public.actividad(
+	idactividad, nombreusuariofk, fecha, duracionmin, tipoactividad, distanciakm, carreraoreto, dirrecorrido)
+	VALUES ('ldnoguera2020-11-10', 'ldnoguera', '2020-11-10', 10, 2, 14, 'carrera', 'ldnoguera2020-11-10.gpx');
+INSERT INTO public.actividad(
+	idactividad, nombreusuariofk, fecha, duracionmin, tipoactividad, distanciakm, carreraoreto, dirrecorrido)
+	VALUES ('adrian032020-11-01', 'adrian03', '2020-11-01', 11, 1, 44, 'carrera', 'adrian032020-11-01.gpx');
