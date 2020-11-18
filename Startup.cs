@@ -25,7 +25,7 @@ namespace Strava2._0Api
         {
             Configuration = configuration;
         }
-
+       
         public IConfiguration Configuration { get; }
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -52,6 +52,20 @@ namespace Strava2._0Api
             services.AddScoped<IPatAccessInterface, PatAccess>();
             services.AddScoped<ISeguidoresAccess, SiguiendoAccess>();
             services.AddScoped<IActividadAccess, ActividadAccess>();
+            services.AddScoped<IRetoAccessInterface, RetoAccess>();
+            services.AddScoped<IGrupoAccessInterface, GrupoAccess>();
+            services.AddScoped<IInscripcionCarreraAccessInterface, InscripcionCarreraAccess>();
+            services.AddScoped<IInscripcionRetoAccessInterface, InscripcionRetoAccess>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("https://localhost:5001")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
+            });
 
         }
 
