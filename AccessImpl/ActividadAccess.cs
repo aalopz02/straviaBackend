@@ -39,7 +39,8 @@ namespace straviaBackend.AccessImpl
                     nombreusuario = actividad.nombreusuariofk,
                     distancia = actividad.distanciakm,
                     tipoactividad = _context.tiposactividades.FirstOrDefault(t  => t.idact == actividad.tipoactividad).nombre,
-                    rutagpx = actividad.dirrecorrido
+                    rutagpx = actividad.dirrecorrido,
+                    imagenperfil = _context.usuario.FirstOrDefault(t => t.nombreusuario == actividad.nombreusuariofk).imagenperfil
                 }) ;
             }
 
