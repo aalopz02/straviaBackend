@@ -19,6 +19,7 @@ namespace straviaBackend.Controllers
         {
             _dataAccessProvider = dataAccessProvider;
         }
+
         //https://localhost:44379/api/TipoAct/1
         [HttpGet("{idact}")]
         public ModelTipoActividad Get(int idact)

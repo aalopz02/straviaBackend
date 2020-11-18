@@ -10,6 +10,16 @@ CREATE TABLE public.carreras
 	CONSTRAINT carreras_pkey PRIMARY KEY (nombrecarrera)
 );
 
+CREATE TABLE public.retos
+(
+	nombrereto character varying(50) NOT NULL,
+	periodo_inicio DATE NOT NULL,
+	periodo_final DATE NOT NULL,
+	tiporeto numeric REFERENCES tiposactividades(idact),
+	privacidad character varying(50),
+	CONSTRAINT retos_pkey PRIMARY KEY (nombrereto)
+);
+
 CREATE TABLE public.patrocinadoresporcarrera(
 	idelemento character varying(50) NOT NULL,
 	nombrecarrerafk  character varying(50) REFERENCES carreras(nombrecarrera),
