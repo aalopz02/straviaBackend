@@ -12,6 +12,7 @@ namespace straviaBackend.mist
     {
         private static string urlimg = "D://OneDrive//Escritorio//dbstrava//imgrepo//";
         private static string urlrutas = "D://OneDrive//Escritorio//dbstrava//reporutas//";
+        private static string urlrecibo = "E://Desktop//dbstrava//reporecibos//";
 
         public static string saveImg(FileModel inFile, string username) {
 
@@ -59,5 +60,31 @@ namespace straviaBackend.mist
                 return null;
             }
         }
+
+        public static string SaveRecibo(FileModel inFile, string username)
+        {
+
+            string content = inFile.file;
+            //data:image/jpeg;base64, => metadata , indica donde inicia
+            string[] decoDiv = content.Split(",");
+            string fileType = decoDiv[0].Split("/")[1].Split(";")[0];
+            byte[] data = System.Convert.FromBase64String(decoDiv[1]);
+            string name = username + "." + fileType;
+            try
+            {
+                using (var fs = new FileStream(urlrecibo + name, FileMode.Create, FileAccess.Write))
+                {
+                    fs.Write(data, 0, data.Length);
+                    return name;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception caught in process: {0}", ex);
+                return null;
+            }
+        }
     }
+
+
 }

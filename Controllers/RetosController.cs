@@ -16,16 +16,15 @@ namespace straviaBackend.Controllers
     public class RetosController : ControllerBase
     {
         private readonly IRetoAccessInterface _dataAccessProvider;
-        private readonly IPatrociandorporCarreraAccessInterface _pats;
-        private readonly ICategoriasporCarreraAccessInterface _cats;
+        private readonly IPatrociandorporRetoAccessInterface _pats;
+       
 
         public RetosController(IRetoAccessInterface dataAccessProvider,
-                                    IPatrociandorporCarreraAccessInterface pats,
-                                    ICategoriasporCarreraAccessInterface cats)
+                                    IPatrociandorporRetoAccessInterface pats)
         {
             _dataAccessProvider = dataAccessProvider;
             _pats = pats;
-            _cats = cats;
+            
     }
 
         [HttpGet]
@@ -35,21 +34,33 @@ namespace straviaBackend.Controllers
         }
 
 
-        //https://localhost:44379/api/Retos?nombreReto=reto1&d1=03/12/1998&d2=05/10/2020&Tipo=Nadar&tipoR=fondo&Privacidad=publico
+        //https://localhost:44379/api/Retos?nombreReto=reto1&d1=03/12/1998&d2=05/10/2020&Tipoact=1&tipo=fondo&Privacidad=publico&patrocinadores=1.2
         [HttpPost] //String nombreReto, DateTime d1, DateTime d2, int Tipo, String Privacidad)
-        public void AddReto(String nombreReto, DateTime d1, DateTime d2, int Tipo,int tipoR, String Privacidad)
+        public void AddReto(String nombreReto, DateTime d1, DateTime d2, int Tipoact,String tipo, String Privacidad, String patrocinadores)
         {
             ModelReto reto = new ModelReto
             {
                 nombrereto = nombreReto,
                 periodo_inicio = d1,
                 periodo_final = d2,
-                tiporeto = Tipo,
-                tipo=tipoR,
+                tipoact = Tipoact,
+                tipo=tipo,
                 privacidad = Privacidad
         
             };
+            
             _dataAccessProvider.AddReto(reto);
+
+
+            foreach (string idpatrocinador in patrocinadores.Split("."))
+            {
+                _pats.AddPatReto(new models.Modelpatrocinadoresporreto
+                {
+                    idelementoreto = reto.nombrereto + idpatrocinador,
+                    patrocinador = int.Parse(idpatrocinador),
+                    nombreretofk = reto.nombrereto
+                });
+            }
         }
 
         [HttpGet("{nombreReto}")]
@@ -59,7 +70,7 @@ namespace straviaBackend.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit(String nombreReto, DateTime d1, DateTime d2, int Tipo, int tipoR, String Privacidad) 
+        public IActionResult Edit(String nombreReto, DateTime d1, DateTime d2, int Tipoact, String tipo, String Privacidad, String patrocinadores) 
         {
             if (ModelState.IsValid)
             {
@@ -68,10 +79,20 @@ namespace straviaBackend.Controllers
                     nombrereto = nombreReto,
                     periodo_inicio = d1,
                     periodo_final = d2,
-                    tiporeto = Tipo,
-                    tipo=tipoR,
+                    tipoact = Tipoact,
+                    tipo= tipo,
                     privacidad = Privacidad
                 };
+
+                foreach (string idpatrocinador in patrocinadores.Split("."))
+                {
+                    _pats.UpdateReto(new models.Modelpatrocinadoresporreto
+                    {
+                        idelementoreto = reto.nombrereto + idpatrocinador,
+                        patrocinador = int.Parse(idpatrocinador),
+                        nombreretofk = reto.nombrereto
+                    });
+                }
                 _dataAccessProvider.UpdateReto(reto);
                 return Ok();
             }
@@ -86,6 +107,7 @@ namespace straviaBackend.Controllers
             {
                 return NotFound();
             }
+
             _dataAccessProvider.DeleteReto(nombreReto);
             return Ok();
         }
