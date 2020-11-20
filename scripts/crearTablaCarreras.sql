@@ -48,7 +48,7 @@ CREATE TABLE public.patrocinadores
 	nombre character varying(500) NOT NULL,
 	representante character varying(100) NOT NULL,
 	telefono numeric NOT NULL,
-	dirlogo character varying(50) NULL,
+	logo character varying(50) NULL,
 	CONSTRAINT patrocinadores_pkey PRIMARY KEY (idpat)
 );
 
@@ -156,3 +156,11 @@ INSERT INTO public.actividad(
 INSERT INTO public.actividad(
 	idactividad, nombreusuariofk, fecha, duracionmin, tipoactividad, distanciakm, carreraoreto, dirrecorrido)
 	VALUES ('adrian032020-11-01', 'adrian03', '2020-11-01', 11, 1, 44, 'carrera', 'adrian032020-11-01.gpx');
+
+CREATE TABLE public.grupos
+(
+	nombregrupo character varying(50) NOT NULL,
+	nombreusuario character varying(50) NOT NULL,
+	idgrupo character varying(50) NOT NULL,
+	CONSTRAINT idgrupo_pkey PRIMARY KEY (idgrupo)
+);

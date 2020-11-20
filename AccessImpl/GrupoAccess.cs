@@ -40,6 +40,22 @@ namespace straviaBackend.AccessImpl
             return _context.grupos.ToList();
         }
 
+        public List<ModelGrupoView> GetGruposForUser(string username)
+        {
+            List<ModelGrupo> allgroups = _context.grupos.ToList();
+            List<ModelGrupoView> models = new List<ModelGrupoView>();
+
+            foreach (ModelGrupo grupo in allgroups) {
+                models.Add(new ModelGrupoView { 
+                    nombregrupo = grupo.nombregrupo,
+                    admin = grupo.nombreusuario,
+                    key = grupo.idgrupo,
+                    suscrito = false
+                });
+            }
+            return models;
+        }
+
         public void UpdateGrupo(ModelGrupo grupo)
         {
             _context.grupos.Update(grupo);

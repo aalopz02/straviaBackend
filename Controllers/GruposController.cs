@@ -28,7 +28,7 @@ namespace straviaBackend.Controllers
             _pats = pats;
             _cats = cats;
           
-    }
+        }
 
         [HttpGet]
         public IEnumerable<ModelGrupo> Get()
@@ -46,8 +46,6 @@ namespace straviaBackend.Controllers
                 nombregrupo = nombreGrupo,
                 nombreusuario=UsuarioAdmin,
                 idgrupo = nombreGrupo + UsuarioAdmin
-
-
             };
             _dataAccessProvider.AddGrupo(grupo);
         

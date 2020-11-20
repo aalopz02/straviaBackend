@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using models;
 using straviaBackend.interfaces;
@@ -73,6 +74,13 @@ namespace straviaBackend.AccessImpl
         void IUsuarioAccessInterface.DeleteUsuario(string NombreUsuario)
         {
             throw new NotImplementedException();
+        }
+
+        void IUsuarioAccessInterface.UpdateUsuario(ModelUsuario usuario,ModelUsuario old)
+        {
+            _context.Entry(old).State = EntityState.Detached;
+            _context.usuario.Update(usuario);
+            _context.SaveChanges();
         }
 
         void IUsuarioAccessInterface.UpdateUsuario(ModelUsuario usuario)

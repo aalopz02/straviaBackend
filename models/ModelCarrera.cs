@@ -13,7 +13,7 @@ namespace models {
 
         public int costo { get; set; }
 
-        public byte[] ruta { get; set; }
+        public String ruta { get; set; }
 
         public int tipoactividad { get; set; }
 
