@@ -141,7 +141,14 @@ namespace straviaBackend.Controllers
         public void Delete(string nombreCarrera)
         {
             var data = _dataAccessProvider.GetCarrera(nombreCarrera);
-            _dataAccessProvider.DeleteCarrera(nombreCarrera);
+            try
+            {
+                _dataAccessProvider.DeleteCarrera(nombreCarrera);
+            }
+            catch (InvalidOperationException) {
+                
+            }
+            
         }
     }
 }

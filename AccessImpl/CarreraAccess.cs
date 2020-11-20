@@ -27,6 +27,20 @@ namespace straviaBackend.AccessImpl
         public void DeleteCarrera(string nombreCarrera)
         {
             var entity = _context.carreras.FirstOrDefault(t => t.nombrecarrera == nombreCarrera);
+            foreach (Modelpatrocinadoresporcarrera patcarr in _context.patrocinadoresporcarrera.Where(t => t.nombrecarrerafk == entity.nombrecarrera).ToList()) {
+                _context.patrocinadoresporcarrera.Remove(patcarr);
+                _context.SaveChanges();
+            }
+            foreach (Modelcategoriasporcarrera catcarr in _context.categoriasporcarrera.Where(t => t.nombrecarrerafk == entity.nombrecarrera).ToList())
+            {
+                _context.categoriasporcarrera.Remove(catcarr);
+                _context.SaveChanges();
+            }
+            foreach (ModelInscripcionCarrera inscar in _context.inscripcioncarreras.Where(t => t.nombrecarrera == entity.nombrecarrera).ToList())
+            {
+                _context.inscripcioncarreras.Remove(inscar);
+                _context.SaveChanges();
+            }
             _context.carreras.Remove(entity);
             _context.SaveChanges();
         }
@@ -41,20 +55,28 @@ namespace straviaBackend.AccessImpl
             List<ModelCarreraView> viewmodels = new List<ModelCarreraView>();
             List<ModelCarrera> carreras = _context.carreras.ToList();
             List<String> nombrecarrerasinscrito = _context.inscripcioncarreras.Where(t => t.nombreusuario==username).Select(e => e.nombrecarrera).ToList();
-            foreach (ModelCarrera carrera in carreras) {
-                viewmodels.Add(new ModelCarreraView { 
-                    nombrecarrera = carrera.nombrecarrera,
-                    costo = carrera.costo,
-                    fecha = carrera.fecha,
-                    cuentapago = carrera.cuentapago,
-                    tipoactividad = _context.tiposactividades.FirstOrDefault(t => t.idact == carrera.tipoactividad).nombre,
-                    patrocinador = _context.patrocinadores.FirstOrDefault(t => t.idpat == _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador).nombre,
-                    logo = _context.patrocinadores.FirstOrDefault(t => t.idpat == _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador).logo,
-                    categoria = _context.categorias.FirstOrDefault(t => t.idcat == _context.categoriasporcarrera.FirstOrDefault(f => f.nombrecarrerafk==carrera.nombrecarrera).categoria).nombre,
-                    suscrito = _context.inscripcioncarreras.Where(t => t.nombrecarrera == carrera.nombrecarrera).Select(f => f.nombreusuario).ToList().Contains(username),
-                    privacidad = carrera.privacidad
-                });
+            try {
+                foreach (ModelCarrera carrera in carreras)
+                {
+                    viewmodels.Add(new ModelCarreraView
+                    {
+                        nombrecarrera = carrera.nombrecarrera,
+                        costo = carrera.costo,
+                        fecha = carrera.fecha,
+                        cuentapago = carrera.cuentapago,
+                        tipoactividad = _context.tiposactividades.FirstOrDefault(t => t.idact == carrera.tipoactividad).nombre,
+                        patrocinador = _context.patrocinadores.FirstOrDefault(t => t.idpat == _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador).nombre,
+                        logo = _context.patrocinadores.FirstOrDefault(t => t.idpat == _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador).logo,
+                        categoria = _context.categorias.FirstOrDefault(t => t.idcat == _context.categoriasporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).categoria).nombre,
+                        suscrito = _context.inscripcioncarreras.Where(t => t.nombrecarrera == carrera.nombrecarrera).Select(f => f.nombreusuario).ToList().Contains(username),
+                        privacidad = carrera.privacidad
+                    });
+                }
+            } catch (NullReferenceException) {
+                return null;
             }
+            
+
             return viewmodels;
         }
 

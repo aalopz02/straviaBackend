@@ -72,6 +72,8 @@ namespace straviaBackend.Controllers
         [HttpPut]
         public IActionResult Edit(String nombreReto, DateTime d1, DateTime d2, int Tipoact, String tipo, String Privacidad, String patrocinadores) 
         {
+            ModelReto old = _dataAccessProvider.GetReto(nombreReto);
+
             if (ModelState.IsValid)
             {
                 ModelReto reto = new ModelReto
