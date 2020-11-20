@@ -29,7 +29,7 @@ namespace straviaBackend.Controllers
     }
 
 
-        //https://localhost:44379/api/InscripcionReto?nombreCarrera=lacarrera&nombreUsuario=nombre
+        //https://localhost:44379/api/InscripcionesReto?nombreCarrera=lacarrera&nombreUsuario=nombre
         [HttpPost]//String nombreReto,String nombreUsuario
         public void AddInscripcionReto(String nombreReto, String nombreUsuario)
         {

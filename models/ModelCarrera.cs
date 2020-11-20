@@ -10,8 +10,8 @@ namespace models {
 
         [Key]
         public String nombrecarrera { get; set; }
-        public String fecha { get; set; }
-        public string ruta { get; set; }
+        public int costo { get; set; }
+        public String ruta { get; set; }
         public int tipoactividad { get; set; }
         public String privacidad { get; set; }
         public int costo { get; set; }

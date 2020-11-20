@@ -1,4 +1,5 @@
-﻿using models;
+﻿using Microsoft.EntityFrameworkCore;
+using models;
 using straviaBackend.interfaces;
 using straviaBackend.models;
 using System;

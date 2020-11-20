@@ -28,7 +28,7 @@ namespace straviaBackend.Controllers
             _pats = pats;
             _cats = cats;
           
-    }
+        }
 
         [HttpGet]
         public IEnumerable<ModelGrupo> Get()
@@ -46,8 +46,6 @@ namespace straviaBackend.Controllers
                 nombregrupo = nombreGrupo,
                 nombreusuario=UsuarioAdmin,
                 idgrupo = nombreGrupo + UsuarioAdmin
-
-
             };
             _dataAccessProvider.AddGrupo(grupo);
         
@@ -60,13 +58,15 @@ namespace straviaBackend.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit(String nombreGrupo,String UsuarioAdmin) 
+        public IActionResult Edit(String nombreGrupo,String UsuarioAdmin, String key) 
         {
             if (ModelState.IsValid)
             {
                 ModelGrupo grupo = new ModelGrupo
                 {
-                    nombregrupo = nombreGrupo
+                    nombregrupo = nombreGrupo,
+                    nombreusuario = UsuarioAdmin,
+                    idgrupo = key
                 };
                
                   
@@ -77,15 +77,15 @@ namespace straviaBackend.Controllers
             return BadRequest();
         }
 
-        [HttpDelete("{nombreGrupo, UsuarioAdmin}")]
-        public IActionResult DeleteConfirmed(string nombreGrupo, string UsuarioAdmin)
+        [HttpDelete("{idGrupo}")]
+        public IActionResult DeleteConfirmed(string idGrupo)
         {
-            var data = _dataAccessProvider.GetGrupo(nombreGrupo+UsuarioAdmin);
+            var data = _dataAccessProvider.GetGrupo(idGrupo);
             if (data == null)
             {
                 return NotFound();
             }
-            _dataAccessProvider.DeleteGrupo(nombreGrupo+UsuarioAdmin);
+            _dataAccessProvider.DeleteGrupo(idGrupo);
             return Ok();
         }
     }

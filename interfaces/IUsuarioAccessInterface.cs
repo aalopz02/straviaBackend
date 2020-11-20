@@ -10,10 +10,10 @@ namespace straviaBackend.interfaces
     public interface IUsuarioAccessInterface
     {
         void AddUsuario(ModelUsuario usuario);
-        void UpdateUsuario(ModelUsuario usuario);
+        void UpdateUsuario(ModelUsuario usuario, ModelUsuario old);
         void DeleteUsuario(string NombreUsuario);
         List<ModelSearchUserView> GetUsuarios(string busqueda, string usuario);
         ModelUsuario GetUsuario(string NombreUsuario);
-        
+        void UpdateUsuario(ModelUsuario usuario);
     }
 }

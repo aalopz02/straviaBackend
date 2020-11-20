@@ -74,9 +74,55 @@ namespace straviaBackend.Controllers
                 nseguidores = 0,
                 imagenperfil = ProcessSaveFiles.saveImg(img, nombreusuario)
         };
-            int x = 1;
             _dataAccessProvider.AddUsuario(usuario);
         }
 
+        [HttpPatch]
+        public void ModUser(String nombreusuario, String password, String fname,
+       String mname, String lname, String nacionalidad, [FromBody] FileModel img)
+        {
+            ModelUsuario usuario;
+            String clave;
+            ModelUsuario old = _dataAccessProvider.GetUsuario(nombreusuario);
+            if (password.Equals("null"))
+            {
+                clave = old.contraseña;
+            }
+            else {
+                clave = password;
+            }
+            if (!img.file.Equals("null"))
+            {
+                usuario = new ModelUsuario
+                {
+                    nombreusuario = old.nombreusuario,
+                    contraseña = clave,
+                    fname = fname,
+                    mname = mname,
+                    lname = lname,
+                    nacionalidad = nacionalidad,
+                    nsiguiendo = old.nsiguiendo,
+                    nseguidores = old.nseguidores,
+                    fechanacimiento = old.fechanacimiento,
+                    imagenperfil = ProcessSaveFiles.saveImg(img, nombreusuario)
+                };
+            }
+            else {
+                usuario = new ModelUsuario
+                {
+                    nombreusuario = old.nombreusuario,
+                    contraseña = clave,
+                    fname = fname,
+                    mname = mname,
+                    lname = lname,
+                    nacionalidad = nacionalidad,
+                    nsiguiendo = old.nsiguiendo,
+                    nseguidores = old.nseguidores,
+                    imagenperfil = old.imagenperfil,
+                    fechanacimiento = old.fechanacimiento,
+                };
+            }
+            _dataAccessProvider.UpdateUsuario(usuario,old);
+        }
     }
 }

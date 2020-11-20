@@ -19,7 +19,7 @@ namespace straviaBackend.AccessImpl
 
         public void AddInscripcionCarrera(ModelInscripcionCarrera inscripcioncarrera)
         {
-            _context.inscripcioncarreras.Add(inscripcioncarrera);
+            _context.inscripcionescarrera.Add(inscripcioncarrera);
             _context.SaveChanges();
         }
 

@@ -16,9 +16,9 @@ namespace models {
         [Column(TypeName = "Date")]
         public DateTime periodo_final { get; set; }
 
-        public int tiporeto { get; set; }
+        public int tipoact { get; set; }
 
-        public int tipo { get; set; }
+        public String tipo { get; set; }
 
         public String privacidad { get; set; }
 

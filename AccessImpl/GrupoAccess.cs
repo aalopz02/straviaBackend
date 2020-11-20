@@ -23,9 +23,9 @@ namespace straviaBackend.AccessImpl
             _context.SaveChanges();
         }
 
-        public void DeleteGrupo(string nombreGrupo)
+        public void DeleteGrupo(string idGrupo)
         {
-            var entity = _context.grupos.FirstOrDefault(t => t.nombregrupo == nombreGrupo);
+            var entity = _context.grupos.FirstOrDefault(t => t.idgrupo == idGrupo);
             _context.grupos.Remove(entity);
             _context.SaveChanges();
         }
@@ -38,6 +38,22 @@ namespace straviaBackend.AccessImpl
         public List<ModelGrupo> GetGrupos()
         {
             return _context.grupos.ToList();
+        }
+
+        public List<ModelGrupoView> GetGruposForUser(string username)
+        {
+            List<ModelGrupo> allgroups = _context.grupos.ToList();
+            List<ModelGrupoView> models = new List<ModelGrupoView>();
+
+            foreach (ModelGrupo grupo in allgroups) {
+                models.Add(new ModelGrupoView { 
+                    nombregrupo = grupo.nombregrupo,
+                    admin = grupo.nombreusuario,
+                    key = grupo.idgrupo,
+                    suscrito = false
+                });
+            }
+            return models;
         }
 
         public void UpdateGrupo(ModelGrupo grupo)

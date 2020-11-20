@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using models;
 using straviaBackend.interfaces;
+using straviaBackend.models;
+using straviaBackend.mist;
 
 namespace straviaBackend.Controllers
 {
@@ -28,15 +30,17 @@ namespace straviaBackend.Controllers
             _cats = cats;
         }
 
-        //https://localhost:44379/api/InscripcionCarrera?nombreCarrera=lacarrera&nombreUsuario=nombre
         [HttpPost]//String nombreCarrera,String nombreUsuario
-        public void AddInscripcionCarrera(String nombreCarrera, String nombreUsuario)
+        public void AddInscripcionCarrera(String nombreCarrera, String nombreUsuario, [FromBody] FileModel img)
         {
+            string y = ProcessSaveFiles.SaveRecibo(img, nombreCarrera + nombreUsuario + "recibo");
+            int x = 0;
             ModelInscripcionCarrera inscripcioncarrera = new ModelInscripcionCarrera
             {
                 nombrecarrera = nombreCarrera,
                 nombreusuario =nombreUsuario,
-                idinscar= nombreCarrera+nombreUsuario
+                idinscar= nombreCarrera+nombreUsuario,
+                recibo = mist.ProcessSaveFiles.SaveRecibo(img, nombreCarrera + nombreUsuario + "recibo")
             };
             _dataAccessProvider.AddInscripcionCarrera(inscripcioncarrera);
   

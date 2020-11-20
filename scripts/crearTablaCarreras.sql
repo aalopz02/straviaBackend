@@ -15,11 +15,36 @@ CREATE TABLE public.retos
 	nombrereto character varying(50) NOT NULL,
 	periodo_inicio DATE NOT NULL,
 	periodo_final DATE NOT NULL,
-	tiporeto numeric REFERENCES tiposactividades(idact),
+	tipoact numeric REFERENCES tiposactividades(idact),
+	tipo character varying(7),
 	privacidad character varying(50),
 	CONSTRAINT retos_pkey PRIMARY KEY (nombrereto)
 );
 
+CREATE TABLE public.grupos
+(
+	nombregrupo character varying(50) NOT NULL,
+	nombreusuario character varying(50) NOT NULL REFERENCES usuario(nombreusuario),
+	idgrupo character varying(100) NOT NULL,
+	CONSTRAINT grupos_pkey PRIMARY KEY (idgrupo)
+);
+
+
+CREATE TABLE public.inscripcionescarrera
+(
+	nombrecarrera character varying(50) NOT NULL REFERENCES carreras(nombrecarrera),
+	nombreusuario character varying(50) NOT NULL REFERENCES usuario(nombreusuario),
+	idinscar character varying(100) NOT NULL,
+	CONSTRAINT inscripcionescarrera_pkey PRIMARY KEY (idinscar)
+);
+CREATE TABLE public.inscripcionesreto
+(
+	nombrereto character varying(50) NOT NULL REFERENCES retos(nombrereto),
+	nombreusuario character varying(50) NOT NULL REFERENCES usuario(nombreusuario),
+	idinsret character varying(100) NOT NULL,
+	recibo CHAR VARYING(50) NULL,
+	CONSTRAINT inscripcionesreto_pkey PRIMARY KEY (idinsret)
+);
 CREATE TABLE public.patrocinadoresporcarrera(
 	idelemento character varying(50) NOT NULL,
 	nombrecarrerafk  character varying(50) REFERENCES carreras(nombrecarrera),
@@ -48,7 +73,7 @@ CREATE TABLE public.patrocinadores
 	nombre character varying(500) NOT NULL,
 	representante character varying(100) NOT NULL,
 	telefono numeric NOT NULL,
-	dirlogo character varying(50) NULL,
+	logo character varying(50) NULL,
 	CONSTRAINT patrocinadores_pkey PRIMARY KEY (idpat)
 );
 
@@ -68,19 +93,19 @@ CREATE TABLE public.seguidores
 );
 
 INSERT INTO public."categorias"("idcat","nombre","rango")
-VALUES (1,'Junior','menos de 15 años');
+VALUES (1,'Junior','menos de 15 aÃ±os');
 INSERT INTO public."categorias"("idcat","nombre","rango")
 VALUES (2,'Sub-23','de 15 a 23');
 INSERT INTO public."categorias"("idcat","nombre","rango")
-VALUES (3,'Open',' de 24 a 30 años');
+VALUES (3,'Open',' de 24 a 30 aÃ±os');
 INSERT INTO public."categorias"("idcat","nombre","rango")
 VALUES (4,'Elite','cualquiera que quiera inscribirse');
 INSERT INTO public."categorias"("idcat","nombre","rango")
-VALUES (5,'Master A','de 30 a 40 años');
+VALUES (5,'Master A','de 30 a 40 aÃ±os');
 INSERT INTO public."categorias"("idcat","nombre","rango")
-VALUES (6,'Master B','de 41 a 50 años');
+VALUES (6,'Master B','de 41 a 50 aÃ±os');
 INSERT INTO public."categorias"("idcat","nombre","rango")
-VALUES (7,'Master C','más de 51 años');
+VALUES (7,'Master C','mÃ¡s de 51 aÃ±os');
 
 INSERT INTO public."patrocinadores"("idpat","nombre","representante","telefono")
 VALUES (1,'CocaCola','elosodecocacola',12345678);
@@ -104,19 +129,19 @@ VALUES (6,'Caminata');
 
 SELECT * FROM public."tiposactividades"
 
-VALUES ('adrian03','clave2','adrian','lopez','Vásquez','03-09-1998','cr',0,0);
-INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+VALUES ('adrian03','clave2','adrian','lopez','VÃ¡squez','03-09-1998','cr',0,0);
+INSERT INTO public."usuario"( nombreusuario, "contraseÃ±a", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
 VALUES ('ldnoguera','clave3','luis','noguera','mena','20-08-1998','cr',0,0);
-INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+INSERT INTO public."usuario"( nombreusuario, "contraseÃ±a", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
 VALUES ('albino','clave4','albino','ice','aya','12-12-2012','cr',0,0);
-INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+INSERT INTO public."usuario"( nombreusuario, "contraseÃ±a", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
 VALUES ('charlie','clave5','carlos','alvarado','segundoapellido','20-08-1920','cr',0,0);
-INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+INSERT INTO public."usuario"( nombreusuario, "contraseÃ±a", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
 VALUES ('gerald02','clave5','gerald','salazar','elizondo','20-08-1998','cr',0,0);
-INSERT INTO public."usuario"( nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
+INSERT INTO public."usuario"( nombreusuario, "contraseÃ±a", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores)
 VALUES ('kevin98','clave6','kevin','alanis','Pineda','20-08-1998','cr',0,0);
 
-SELECT nombreusuario, "contraseña", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores
+SELECT nombreusuario, "contraseÃ±a", fname, mname, lname, fechanacimiento, nacionalidad, nsiguiendo, nseguidores
 	FROM public.usuario;
 
 CREATE TABLE public.actividad
@@ -135,7 +160,7 @@ CREATE TABLE public.actividad
 CREATE TABLE public.actividad
 (
 	nombreusuario character varying(50) NOT NULL,
-	contraseña character varying(500)  NOT NULL,
+	contraseÃ±a character varying(500)  NOT NULL,
 	fname character varying(50) NOT NULL,
 	mnane character varying(50) NOT NULL,
 	lname character varying(50) NOT NULL,
@@ -157,7 +182,6 @@ INSERT INTO public.actividad(
 	idactividad, nombreusuariofk, fecha, duracionmin, tipoactividad, distanciakm, carreraoreto, dirrecorrido)
 	VALUES ('adrian032020-11-01', 'adrian03', '2020-11-01', 11, 1, 44, 'carrera', 'adrian032020-11-01.gpx');
 
-
 CREATE TABLE public.inscripcioncarreras
 (
 	nombrecarrera character varying(50) NOT NULL REFERENCES carreras(nombrecarrera),
@@ -174,3 +198,12 @@ CREATE TABLE public.inscripcionretos
 	idinsret character varying(50),
 	CONSTRAINT inscripcionretos_pkey PRIMARY KEY (idinsret)
 );
+
+CREATE TABLE public.grupos
+(
+	nombregrupo character varying(50) NOT NULL,
+	nombreusuario character varying(50) NOT NULL,
+	idgrupo character varying(50) NOT NULL,
+	CONSTRAINT idgrupo_pkey PRIMARY KEY (idgrupo)
+);
+
