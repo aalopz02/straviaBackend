@@ -19,7 +19,7 @@ namespace straviaBackend.AccessImpl
 
         public void AddInscripcionReto(ModelInscripcionReto inscripcionreto)
         {
-            _context.inscripcionretos.Add(inscripcionreto);
+            _context.inscripcionesreto.Add(inscripcionreto);
             _context.SaveChanges();
         }
 

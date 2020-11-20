@@ -23,9 +23,9 @@ namespace straviaBackend.AccessImpl
             _context.SaveChanges();
         }
 
-        public void DeleteGrupo(string nombreGrupo)
+        public void DeleteGrupo(string idGrupo)
         {
-            var entity = _context.grupos.FirstOrDefault(t => t.nombregrupo == nombreGrupo);
+            var entity = _context.grupos.FirstOrDefault(t => t.idgrupo == idGrupo);
             _context.grupos.Remove(entity);
             _context.SaveChanges();
         }

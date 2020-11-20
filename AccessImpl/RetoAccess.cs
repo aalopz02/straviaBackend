@@ -26,6 +26,11 @@ namespace straviaBackend.AccessImpl
         public void DeleteReto(string nombreReto)
         {
             var entity = _context.retos.FirstOrDefault(t => t.nombrereto == nombreReto);
+            List<Modelpatrocinadoresporreto> patsr = _context.patrocinadoresporreto.Where(t => t.nombreretofk == nombreReto).ToList();
+            foreach (Modelpatrocinadoresporreto pr in patsr) {
+                _context.patrocinadoresporreto.Remove(pr);
+                _context.SaveChanges();
+            }
             _context.retos.Remove(entity);
             _context.SaveChanges();
         }

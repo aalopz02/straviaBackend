@@ -11,7 +11,7 @@ namespace models {
         public String nombrecarrera { get; set; }
 
         public String nombreusuario { get; set; }
-
+      
         public string recibo { get; set; }
 
         [Key]
