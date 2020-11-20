@@ -35,9 +35,26 @@ namespace straviaBackend.AccessImpl
             return _context.carreras.FirstOrDefault(t => t.nombrecarrera == nombreCarrera);
         }
 
-        public List<ModelCarrera> GetCarreras()
+        public List<ModelCarreraView> GetCarreras(string username)
         {
-            return _context.carreras.ToList();
+            List<ModelCarreraView> viewmodels = new List<ModelCarreraView>();
+            List<ModelCarrera> carreras = _context.carreras.ToList();
+            List<String> nombrecarrerasinscrito = _context.inscripcioncarreras.Where(t => t.nombreusuario==username).Select(e => e.nombrecarrera).ToList();
+            foreach (ModelCarrera carrera in carreras) {
+                viewmodels.Add(new ModelCarreraView { 
+                    nombrecarrera = carrera.nombrecarrera,
+                    costo = carrera.costo,
+                    fecha = carrera.fecha,
+                    cuentapago = carrera.cuentapago,
+                    tipoactividad = _context.tiposactividades.FirstOrDefault(t => t.idact == carrera.tipoactividad).nombre,
+                    patrocinador = _context.patrocinadores.FirstOrDefault(t => t.idpat == _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador).nombre,
+                    logo = _context.patrocinadores.FirstOrDefault(t => t.idpat == _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador).logo,
+                    categoria = _context.categorias.FirstOrDefault(t => t.idcat == _context.categoriasporcarrera.FirstOrDefault(f => f.nombrecarrerafk==carrera.nombrecarrera).categoria).nombre,
+                    suscrito = _context.inscripcioncarreras.Where(t => t.nombrecarrera == carrera.nombrecarrera).Select(f => f.nombreusuario).ToList().Contains(username)
+                });
+            }
+            int x = 0;
+            return viewmodels;
         }
 
         public void UpdateCarrera(ModelCarrera carrera)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using models;
 using straviaBackend.interfaces;
 using straviaBackend.models;
@@ -26,18 +27,30 @@ namespace straviaBackend.Controllers
         [HttpPost]
         public void Post(string usuarioaseguir, string usuario)
         {
-            _dataAccessProvider.AddSeguidor(new ModelSiguiendo()
-            {
-                idelemento = usuarioaseguir + usuario,
-                nombreusuariofk = usuario,
-                nombreusuariosiguiendofk = usuarioaseguir
-            }) ;
-            ModelUsuario siguiendo = _userAccess.GetUsuario(usuarioaseguir);
-            siguiendo.nseguidores += 1;
-            _userAccess.UpdateUsuario(siguiendo);
-            ModelUsuario seguidor = _userAccess.GetUsuario(usuario);
-            seguidor.nsiguiendo += 1;
-            _userAccess.UpdateUsuario(seguidor);
+            try{
+                _dataAccessProvider.AddSeguidor(new ModelSiguiendo()
+                {
+                    idelemento = usuarioaseguir + usuario,
+                    nombreusuariofk = usuario,
+                    nombreusuariosiguiendofk = usuarioaseguir
+                });
+                ModelUsuario siguiendo = _userAccess.GetUsuario(usuarioaseguir);
+                siguiendo.nseguidores += 1;
+                _userAccess.UpdateUsuario(siguiendo);
+                ModelUsuario seguidor = _userAccess.GetUsuario(usuario);
+                seguidor.nsiguiendo += 1;
+                _userAccess.UpdateUsuario(seguidor);
+            } catch (DbUpdateException e) {
+                _dataAccessProvider.DeleteSeguidor(usuarioaseguir + usuario);
+                int x = 0;
+                ModelUsuario siguiendo = _userAccess.GetUsuario(usuarioaseguir);
+                siguiendo.nseguidores -= 1;
+                _userAccess.UpdateUsuario(siguiendo);
+                ModelUsuario seguidor = _userAccess.GetUsuario(usuario);
+                seguidor.nsiguiendo -= 1;
+                _userAccess.UpdateUsuario(seguidor);
+            }
+    
         }
 
         [HttpDelete("{idelemento}")]

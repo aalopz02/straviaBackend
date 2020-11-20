@@ -1,4 +1,5 @@
 ﻿using models;
+using straviaBackend.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace straviaBackend.interfaces
         void DeleteGrupo(string idGrupo);
         List<ModelGrupo> GetGrupo(string nombreGrupo);
         List<ModelGrupo> GetGrupos();
-
-
+        List<ModelGrupoView> GetGruposForUser(string username);
     }
 }

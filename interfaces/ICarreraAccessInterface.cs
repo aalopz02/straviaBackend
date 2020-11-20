@@ -1,4 +1,5 @@
 ﻿using models;
+using straviaBackend.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace straviaBackend.interfaces
         void UpdateCarrera(ModelCarrera carrera);
         void DeleteCarrera(string nombreCarrera);
         ModelCarrera GetCarrera(string nombreCarrera);
-        List<ModelCarrera> GetCarreras();
+        List<ModelCarreraView> GetCarreras(string username);
 
 
     }

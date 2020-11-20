@@ -41,7 +41,7 @@ namespace straviaBackend.Controllers
                 nombrecarrera = nombreCarrera,
                 nombreusuario =nombreUsuario,
                 idinscar= nombreCarrera+nombreUsuario,
-                recibo = ProcessSaveFiles.saveImg(img, nombreCarrera+nombreUsuario+"recibo")
+                recibo = mist.ProcessSaveFiles.SaveRecibo(img, nombreCarrera + nombreUsuario + "recibo")
             };
             _dataAccessProvider.AddInscripcionCarrera(inscripcioncarrera);
   
