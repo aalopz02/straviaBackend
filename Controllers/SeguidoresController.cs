@@ -61,8 +61,8 @@ namespace straviaBackend.Controllers
                 return NotFound();
             }
             _dataAccessProvider.DeleteSeguidor(data.idelemento);
+
             return Ok();
-            //aca tambien tiene que decrementar el conteo para ambos
         }
 
         [HttpGet("{usuario}")]

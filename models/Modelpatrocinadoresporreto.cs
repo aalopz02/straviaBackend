@@ -14,19 +14,9 @@ namespace straviaBackend.models
         [Key]
         public string idelementoreto { get; set; }
 
-        //[ForeignKey("idpat")]
-        //public ModelPatrocinador patrocinadores { get; set; }
-
-        //[ForeignKey("nombrecarrera")]
-        //public ModelCarrera carreras { get; set; }
-
-        //public int idpat { get; set; }
-
         public string nombreretofk { get; set; }
 
         public int patrocinador { get; set; }
-
-        //public string nombrecarrera { get; set; }
     
     }
 }

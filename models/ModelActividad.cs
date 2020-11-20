@@ -12,6 +12,7 @@ namespace straviaBackend.models
 		[Key]
 		public String idactividad { get; set; }
 		public String nombreusuariofk { get; set; }
+
 		[Column(TypeName = "Date")]
 		public DateTime fecha { get; set; }
 		public int duracionmin { get; set; }

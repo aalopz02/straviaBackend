@@ -77,10 +77,27 @@ namespace straviaBackend.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit(String nombreCarrera, int Costo, int Cuenta, DateTime Fecha, String privacidad, int idtipo,String patrocinadores, String categorias) 
+        public IActionResult Edit(String nombreCarrera, int Costo, int Cuenta, DateTime Fecha, String privacidad, int idtipo, String patrocinadores, String categorias, [FromBody] FileModel file)
         {
-            if (ModelState.IsValid)
+            ModelCarrera old = _dataAccessProvider.GetCarrera(nombreCarrera);
+            int idtipoact;
+            if (idtipo == 0)
             {
+                idtipoact = old.tipoactividad;
+            }
+            else {
+                idtipoact = idtipo;
+            }
+            string rutanueva;
+            if (file.file != null)
+            {
+                rutanueva = mist.ProcessSaveFiles.saveRutaCarrera(file, nombreCarrera);
+            }
+            else
+            {
+                rutanueva = old.ruta;
+            }
+
                 ModelCarrera carrera = new ModelCarrera
                 {
                     costo = Costo,
@@ -88,42 +105,43 @@ namespace straviaBackend.Controllers
                     fecha = Fecha,
                     privacidad = privacidad,
                     nombrecarrera = nombreCarrera,
-                    tipoactividad = idtipo
+                    tipoactividad = idtipoact,
+                    ruta = rutanueva
                 };
-                foreach (string idpatrocinador in patrocinadores.Split("."))
+                if (patrocinadores != null)
                 {
-                    _pats.Update(new models.Modelpatrocinadoresporcarrera
+                    foreach (string idpatrocinador in patrocinadores.Split("."))
                     {
-                        idelemento = carrera.nombrecarrera + idpatrocinador,
-                        patrocinador = int.Parse(idpatrocinador),
-                        nombrecarrerafk = carrera.nombrecarrera
-                    });
+                        _pats.Update(new models.Modelpatrocinadoresporcarrera
+                        {
+                            idelemento = carrera.nombrecarrera + idpatrocinador,
+                            patrocinador = int.Parse(idpatrocinador),
+                            nombrecarrerafk = carrera.nombrecarrera
+                        });
+                    }
                 }
-                foreach (string idcat in categorias.Split("."))
-                {
-                    _cats.Update(new models.Modelcategoriasporcarrera
+
+                if (categorias != null) {
+                    foreach (string idcat in categorias.Split("."))
                     {
-                        idelemento = carrera.nombrecarrera + idcat,
-                        categoria = int.Parse(idcat),
-                        nombrecarrerafk = carrera.nombrecarrera
-                    });
+                        _cats.Update(new models.Modelcategoriasporcarrera
+                        {
+                            idelemento = carrera.nombrecarrera + idcat,
+                            categoria = int.Parse(idcat),
+                            nombrecarrerafk = carrera.nombrecarrera
+                        });
+                    }
+                    
                 }
-                _dataAccessProvider.UpdateCarrera(carrera);
-                return Ok();
-            }
-            return BadRequest();
+            _dataAccessProvider.UpdateCarrera(carrera, old);
+            return Ok();
         }
 
-        [HttpDelete("{nombreCarrera}")]
-        public IActionResult DeleteConfirmed(string nombreCarrera)
+        [HttpDelete]
+        public void Delete(string nombreCarrera)
         {
             var data = _dataAccessProvider.GetCarrera(nombreCarrera);
-            if (data == null)
-            {
-                return NotFound();
-            }
             _dataAccessProvider.DeleteCarrera(nombreCarrera);
-            return Ok();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace straviaBackend.models
         public String categoria { get; set; }
         public String logo { get; set; }
         public bool suscrito { get; set; }
+        public string privacidad { get; set; }
     }
 
 }

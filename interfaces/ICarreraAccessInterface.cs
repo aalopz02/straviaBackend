@@ -10,7 +10,7 @@ namespace straviaBackend.interfaces
     public interface ICarreraAccessInterface
     {
         void AddCarrera(ModelCarrera carrera);
-        void UpdateCarrera(ModelCarrera carrera);
+        void UpdateCarrera(ModelCarrera carrera, ModelCarrera old);
         void DeleteCarrera(string nombreCarrera);
         ModelCarrera GetCarrera(string nombreCarrera);
         List<ModelCarreraView> GetCarreras(string username);

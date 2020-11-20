@@ -1,4 +1,5 @@
-﻿using models;
+﻿using Microsoft.EntityFrameworkCore;
+using models;
 using straviaBackend.interfaces;
 using straviaBackend.models;
 using System;
@@ -50,7 +51,8 @@ namespace straviaBackend.AccessImpl
                     patrocinador = _context.patrocinadores.FirstOrDefault(t => t.idpat == _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador).nombre,
                     logo = _context.patrocinadores.FirstOrDefault(t => t.idpat == _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador).logo,
                     categoria = _context.categorias.FirstOrDefault(t => t.idcat == _context.categoriasporcarrera.FirstOrDefault(f => f.nombrecarrerafk==carrera.nombrecarrera).categoria).nombre,
-                    suscrito = _context.inscripcioncarreras.Where(t => t.nombrecarrera == carrera.nombrecarrera).Select(f => f.nombreusuario).ToList().Contains(username)
+                    suscrito = _context.inscripcioncarreras.Where(t => t.nombrecarrera == carrera.nombrecarrera).Select(f => f.nombreusuario).ToList().Contains(username),
+                    privacidad = carrera.privacidad
                 });
             }
             return viewmodels;
@@ -81,8 +83,9 @@ namespace straviaBackend.AccessImpl
             return listaend;
         }
 
-        public void UpdateCarrera(ModelCarrera carrera)
+        public void UpdateCarrera(ModelCarrera carrera, ModelCarrera old)
         {
+            _context.Entry(old).State = EntityState.Detached;
             _context.carreras.Update(carrera);
             _context.SaveChanges();
         }
