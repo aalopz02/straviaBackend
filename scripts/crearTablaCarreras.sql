@@ -1,4 +1,4 @@
-CREATE TABLE public.carreras////asdcasdc LA DE USUARIO UN ATRIBUTO NULL CHAR VARYING 50 imagenperfil
+CREATE TABLE public.carreras
 (
 	nombrecarrera character varying(50) NOT NULL,
 	costo numeric NOT NULL,

@@ -30,11 +30,9 @@ namespace straviaBackend.Controllers
             _cats = cats;
         }
 
-        [HttpPost]//String nombreCarrera,String nombreUsuario
+        [HttpPost]
         public void AddInscripcionCarrera(String nombreCarrera, String nombreUsuario, [FromBody] FileModel img)
         {
-            string y = ProcessSaveFiles.SaveRecibo(img, nombreCarrera + nombreUsuario + "recibo");
-            int x = 0;
             ModelInscripcionCarrera inscripcioncarrera = new ModelInscripcionCarrera
             {
                 nombrecarrera = nombreCarrera,

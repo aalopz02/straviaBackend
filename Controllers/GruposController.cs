@@ -18,7 +18,7 @@ namespace straviaBackend.Controllers
         private readonly IGrupoAccessInterface _dataAccessProvider;
         private readonly IPatrociandorporCarreraAccessInterface _pats;
         private readonly ICategoriasporCarreraAccessInterface _cats;
-        private readonly IUsuarioAccessInterface _uats;
+
 
         public GruposController(IGrupoAccessInterface dataAccessProvider,
                                     IPatrociandorporCarreraAccessInterface pats,

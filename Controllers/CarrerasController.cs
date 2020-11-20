@@ -37,7 +37,7 @@ namespace straviaBackend.Controllers
 
         //https://localhost:44379/api/Carreras?nombreCarrera=lacarrera&Costo=12345&Cuenta=1234567890&Fecha=fecha&privacidad=publico&idtipo=1&ruta=0&patrocinadores=1.2&categorias=1.2.3
         [HttpPost]//String nombreCarrera,int Costo,int Cuenta,String Fecha,String privacidad, int idtipo, String patrocinadores,String categorias
-        public void AddCarrera(String nombreCarrera, int Costo, int Cuenta, String Fecha, String privacidad, int idtipo, String patrocinadores, String categorias,[FromBody] FileModel rutacarrera)
+        public void AddCarrera(String nombreCarrera, int Costo, int Cuenta, DateTime Fecha, String privacidad, int idtipo, String patrocinadores, String categorias,[FromBody] FileModel rutacarrera)
         {
             ModelCarrera carrera = new ModelCarrera
             {
@@ -77,7 +77,7 @@ namespace straviaBackend.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit(String nombreCarrera, int Costo, int Cuenta, String Fecha, String privacidad, int idtipo,String patrocinadores, String categorias) 
+        public IActionResult Edit(String nombreCarrera, int Costo, int Cuenta, DateTime Fecha, String privacidad, int idtipo,String patrocinadores, String categorias) 
         {
             if (ModelState.IsValid)
             {

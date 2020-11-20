@@ -14,7 +14,9 @@ namespace models {
         public String ruta { get; set; }
         public int tipoactividad { get; set; }
         public String privacidad { get; set; }
-        public int costo { get; set; }
+
+        [Column(TypeName = "Date")]
+        public DateTime fecha { get; set; }
         public int cuentapago { get; set; }
 
     }

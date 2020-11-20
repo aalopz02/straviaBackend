@@ -53,7 +53,6 @@ namespace straviaBackend.AccessImpl
                     suscrito = _context.inscripcioncarreras.Where(t => t.nombrecarrera == carrera.nombrecarrera).Select(f => f.nombreusuario).ToList().Contains(username)
                 });
             }
-            int x = 0;
             return viewmodels;
         }
 
@@ -63,7 +62,7 @@ namespace straviaBackend.AccessImpl
             List<ModelCarrera> allcarreras = _context.carreras.ToList();
             List<ModelCarreraView> listaend = new List<ModelCarreraView>();
             foreach (ModelCarrera carrera in allcarreras)
-            {/
+            {
                 int idpat = _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador;
                 int idcat = _context.categoriasporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).categoria;
                 listaend.Add(new ModelCarreraView

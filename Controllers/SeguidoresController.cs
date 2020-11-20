@@ -40,9 +40,8 @@ namespace straviaBackend.Controllers
                 ModelUsuario seguidor = _userAccess.GetUsuario(usuario);
                 seguidor.nsiguiendo += 1;
                 _userAccess.UpdateUsuario(seguidor);
-            } catch (DbUpdateException e) {
+            } catch (DbUpdateException) {
                 _dataAccessProvider.DeleteSeguidor(usuarioaseguir + usuario);
-                int x = 0;
                 ModelUsuario siguiendo = _userAccess.GetUsuario(usuarioaseguir);
                 siguiendo.nseguidores -= 1;
                 _userAccess.UpdateUsuario(siguiendo);
