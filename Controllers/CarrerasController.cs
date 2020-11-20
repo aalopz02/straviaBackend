@@ -35,7 +35,6 @@ namespace straviaBackend.Controllers
             return _dataAccessProvider.GetCarreras(username);
         }
 
-
         //https://localhost:44379/api/Carreras?nombreCarrera=lacarrera&Costo=12345&Cuenta=1234567890&Fecha=fecha&privacidad=publico&idtipo=1&ruta=0&patrocinadores=1.2&categorias=1.2.3
         [HttpPost]//String nombreCarrera,int Costo,int Cuenta,String Fecha,String privacidad, int idtipo, String patrocinadores,String categorias
         public void AddCarrera(String nombreCarrera, int Costo, int Cuenta, String Fecha, String privacidad, int idtipo, String patrocinadores, String categorias,[FromBody] FileModel rutacarrera)

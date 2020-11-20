@@ -7,6 +7,7 @@ namespace straviaBackend.models
 {
     public class ModelCarreraView
     {
+
         public String nombrecarrera { get; set; }
         public int costo { get; set; }
 
@@ -24,4 +25,5 @@ namespace straviaBackend.models
 
         public bool suscrito { get; set; }
     }
+
 }

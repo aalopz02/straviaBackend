@@ -14,7 +14,5 @@ namespace straviaBackend.interfaces
         void DeleteCarrera(string nombreCarrera);
         ModelCarrera GetCarrera(string nombreCarrera);
         List<ModelCarreraView> GetCarreras(string username);
-
-
     }
 }
