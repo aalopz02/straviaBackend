@@ -1,4 +1,5 @@
-﻿using models;
+﻿using Microsoft.EntityFrameworkCore;
+using models;
 using straviaBackend.interfaces;
 using straviaBackend.models;
 using System;
@@ -45,8 +46,9 @@ namespace straviaBackend.AccessImpl
             return _context.retos.ToList();
         }
 
-        public void UpdateReto(ModelReto reto)
+        public void UpdateReto(ModelReto reto,ModelReto old)
         {
+            _context.Entry(old).State = EntityState.Detached;
             _context.retos.Update(reto);
             _context.SaveChanges();
         }

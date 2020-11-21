@@ -73,32 +73,38 @@ namespace straviaBackend.Controllers
         public IActionResult Edit(String nombreReto, DateTime d1, DateTime d2, int Tipoact, String tipo, String Privacidad, String patrocinadores) 
         {
             ModelReto old = _dataAccessProvider.GetReto(nombreReto);
-
-            if (ModelState.IsValid)
-            {
+            int tipoactnew = 0;
+                if (Tipoact == 0)
+                {
+                    tipoactnew = old.tipoact;
+                }
+                else {
+                    tipoactnew = Tipoact;
+                }
                 ModelReto reto = new ModelReto
                 {
                     nombrereto = nombreReto,
                     periodo_inicio = d1,
                     periodo_final = d2,
-                    tipoact = Tipoact,
+                    tipoact = tipoactnew,
                     tipo= tipo,
                     privacidad = Privacidad
                 };
-
-                foreach (string idpatrocinador in patrocinadores.Split("."))
-                {
-                    _pats.UpdateReto(new models.Modelpatrocinadoresporreto
+                if (patrocinadores != null) {
+                    foreach (string idpatrocinador in patrocinadores.Split("."))
                     {
-                        idelementoreto = reto.nombrereto + idpatrocinador,
-                        patrocinador = int.Parse(idpatrocinador),
-                        nombreretofk = reto.nombrereto
-                    });
+                        _pats.UpdateReto(new models.Modelpatrocinadoresporreto
+                        {
+                            idelementoreto = reto.nombrereto + idpatrocinador,
+                            patrocinador = int.Parse(idpatrocinador),
+                            nombreretofk = reto.nombrereto
+                        });
+                    }
                 }
-                _dataAccessProvider.UpdateReto(reto);
+                
+                _dataAccessProvider.UpdateReto(reto,old);
                 return Ok();
-            }
-            return BadRequest();
+
         }
 
         [HttpDelete("{nombreReto}")]
