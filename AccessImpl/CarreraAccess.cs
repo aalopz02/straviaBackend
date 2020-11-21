@@ -69,7 +69,8 @@ namespace straviaBackend.AccessImpl
                         logo = _context.patrocinadores.FirstOrDefault(t => t.idpat == _context.patrocinadoresporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).patrocinador).logo,
                         categoria = _context.categorias.FirstOrDefault(t => t.idcat == _context.categoriasporcarrera.FirstOrDefault(f => f.nombrecarrerafk == carrera.nombrecarrera).categoria).nombre,
                         suscrito = _context.inscripcioncarreras.Where(t => t.nombrecarrera == carrera.nombrecarrera).Select(f => f.nombreusuario).ToList().Contains(username),
-                        privacidad = carrera.privacidad
+                        privacidad = carrera.privacidad,
+                        ruta = carrera.ruta
                     });
                 }
             } catch (NullReferenceException) {
@@ -98,7 +99,7 @@ namespace straviaBackend.AccessImpl
                     patrocinador = _context.patrocinadores.FirstOrDefault(t => t.idpat == idpat).nombre,
                     categoria = _context.categorias.FirstOrDefault(t => t.idcat == idcat).nombre,
                     suscrito = _context.inscripcioncarreras.Where(t => t.nombrecarrera == carrera.nombrecarrera).ToList().Count() != 0
-
+                    ,ruta = carrera.ruta
                 });
                
             }

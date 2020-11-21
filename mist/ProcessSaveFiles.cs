@@ -66,7 +66,7 @@ namespace straviaBackend.mist
         {
             string content = inFile.file;
             byte[] data = Encoding.ASCII.GetBytes(content);
-            string name = username + date + ".gpx";
+            string name = username + date + ".txt";
             try
             {
                 using (var fs = new FileStream(urlrutas + name, FileMode.Create, FileAccess.Write))
@@ -86,7 +86,7 @@ namespace straviaBackend.mist
         {
             string content = inFile.file;
             byte[] data = Encoding.ASCII.GetBytes(content);
-            string name = nombreCarrera + ".gpx";
+            string name = nombreCarrera + ".txt";
             try
             {
                 using (var fs = new FileStream(urlrutascarreras + name, FileMode.Create, FileAccess.Write))

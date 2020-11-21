@@ -21,6 +21,7 @@ namespace straviaBackend.models
         public String logo { get; set; }
         public bool suscrito { get; set; }
         public string privacidad { get; set; }
+        public string ruta { get; set; }
     }
 
 }
