@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using straviaBackend.models;
+
 
 namespace straviaBackend.interfaces
 {
@@ -13,6 +15,7 @@ namespace straviaBackend.interfaces
         void DeleteReto(string nombreReto);
         ModelReto GetReto(string nombreReto);
         List<ModelReto> GetRetos();
+        List<ModelRetoView> GetRetosForUser(string username);
 
 
     }
