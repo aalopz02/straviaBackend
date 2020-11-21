@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using models;
 using straviaBackend.interfaces;
+using straviaBackend.models;
 
 namespace straviaBackend.Controllers
 {
@@ -33,6 +34,11 @@ namespace straviaBackend.Controllers
             return _dataAccessProvider.GetRetos();
         }
 
+        [HttpGet("busqueda/{nombreUsuario}")]
+        public IEnumerable<ModelRetoView> Get(string nombreUsuario)
+        {
+            return _dataAccessProvider.GetRetosForUser(nombreUsuario);
+        }
 
         //https://localhost:44379/api/Retos?nombreReto=reto1&d1=03/12/1998&d2=05/10/2020&Tipoact=1&tipo=fondo&Privacidad=publico&patrocinadores=1.2
         [HttpPost] //String nombreReto, DateTime d1, DateTime d2, int Tipo, String Privacidad)

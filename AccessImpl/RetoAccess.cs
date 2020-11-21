@@ -46,6 +46,33 @@ namespace straviaBackend.AccessImpl
             return _context.retos.ToList();
         }
 
+        public List<ModelRetoView> GetRetosForUser(string username)
+        {
+            List<String> listaRetosInscrito = _context.inscripcionesreto.Where(t => t.nombreusuario == username).Select(t => t.nombreusuario).ToList();
+            List<ModelReto> allretos = _context.retos.ToList();
+            List<ModelRetoView> listaend = new List<ModelRetoView>();
+            foreach (ModelReto reto in allretos)
+            {
+                int idpat = _context.patrocinadoresporreto.FirstOrDefault(f => f.nombreretofk == reto.nombrereto).patrocinador;
+                listaend.Add(new ModelRetoView
+                {
+                    nombrereto = reto.nombrereto,
+                    periodo_inicio = reto.periodo_inicio,
+                    periodo_final = reto.periodo_final,
+                    tipoact = _context.tiposactividades.FirstOrDefault(t => t.idact == reto.tipoact).nombre,
+                    tipo = reto.tipo,
+                    logo = _context.patrocinadores.FirstOrDefault(t => t.idpat == _context.patrocinadoresporreto.FirstOrDefault(f => f.nombreretofk == reto.nombrereto).patrocinador).logo,
+                    privacidad = reto.privacidad,
+                    patrocinador = _context.patrocinadores.FirstOrDefault(t => t.idpat == idpat).nombre,
+                    suscrito = _context.inscripcionesreto.Where(t => t.nombrereto == reto.nombrereto).ToList().Count() != 0
+
+                });
+
+            }
+            return listaend;
+        }
+
+
         public void UpdateReto(ModelReto reto,ModelReto old)
         {
             _context.Entry(old).State = EntityState.Detached;
