@@ -46,12 +46,20 @@ namespace straviaBackend.AccessImpl
             List<ModelGrupoView> models = new List<ModelGrupoView>();
 
             foreach (ModelGrupo grupo in allgroups) {
-                models.Add(new ModelGrupoView { 
+                bool estasuscrito = false;
+                if (_context.unionusuariogrupo.Where(t => t.idunion == username + grupo.idgrupo).ToList().Count() != 0) {
+                    estasuscrito = true;
+                }
+                if (grupo.nombreusuario.Equals(username)) {
+                    estasuscrito = true;
+                }
+                models.Add(new ModelGrupoView
+                {
                     nombregrupo = grupo.nombregrupo,
                     admin = grupo.nombreusuario,
                     key = grupo.idgrupo,
-                    suscrito = false
-                });
+                    suscrito = estasuscrito
+                }) ;
             }
             return models;
         }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using models;
 using straviaBackend.interfaces;
+using straviaBackend.models;
 
 namespace straviaBackend.Controllers
 {
@@ -18,16 +19,23 @@ namespace straviaBackend.Controllers
         private readonly IInscripcionRetoAccessInterface _dataAccessProvider;
         private readonly IPatrociandorporCarreraAccessInterface _pats;
         private readonly ICategoriasporCarreraAccessInterface _cats;
+        private readonly IRetoAccessInterface _retos;
 
         public InscripcionesRetoController(IInscripcionRetoAccessInterface dataAccessProvider,
                                     IPatrociandorporCarreraAccessInterface pats,
-                                    ICategoriasporCarreraAccessInterface cats)
+                                    ICategoriasporCarreraAccessInterface cats,
+                                    IRetoAccessInterface retos)
         {
             _dataAccessProvider = dataAccessProvider;
             _pats = pats;
             _cats = cats;
-    }
-
+            _retos = retos;
+        }
+        //https://localhost:44379/api/InscripcionesReto?username=aalopz02
+        [HttpGet]
+        public IEnumerable<ModelRetoView> GET(string username) {
+            return _retos.GetRetosForUser(username);
+        }
 
         //https://localhost:44379/api/InscripcionesReto?nombreCarrera=lacarrera&nombreUsuario=nombre
         [HttpPost]//String nombreReto,String nombreUsuario

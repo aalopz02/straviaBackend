@@ -40,9 +40,8 @@ namespace Strava2._0Api
             services.AddControllers();
             var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
 
-            services.AddDbContext<StravaContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=stravia2.0;User Id=postgres;Password=clave;"));
+            services.AddDbContext<StravaContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=stravia2.0;User Id=postgres;Password=2098;"));
 
-            
             services.AddScoped<ITipoActAccessInterface, TipoActAccess>();
             services.AddScoped<ICategoriasporCarreraAccessInterface, CategoriasporCarreraAccess>();
             services.AddScoped<IPatrociandorporCarreraAccessInterface, PatrocinadoresporCarreraAccess>();
@@ -57,6 +56,8 @@ namespace Strava2._0Api
             services.AddScoped<IGrupoAccessInterface, GrupoAccess>();
             services.AddScoped<IInscripcionCarreraAccessInterface, InscripcionCarreraAccess>();
             services.AddScoped<IInscripcionRetoAccessInterface, InscripcionRetoAccess>();
+            services.AddScoped<IUnionGrupoAccessInterface, UnionUsuarioGrupoAccess>();
+
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,

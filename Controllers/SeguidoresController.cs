@@ -27,20 +27,25 @@ namespace straviaBackend.Controllers
         [HttpPost]
         public void Post(string usuarioaseguir, string usuario)
         {
-            try{
-                _dataAccessProvider.AddSeguidor(new ModelSiguiendo()
-                {
-                    idelemento = usuarioaseguir + usuario,
+            _dataAccessProvider.AddSeguidor(new ModelSiguiendo()
+               {
+                   idelemento = usuarioaseguir + usuario,
                     nombreusuariofk = usuario,
                     nombreusuariosiguiendofk = usuarioaseguir
                 });
-                ModelUsuario siguiendo = _userAccess.GetUsuario(usuarioaseguir);
-                siguiendo.nseguidores += 1;
-                _userAccess.UpdateUsuario(siguiendo);
-                ModelUsuario seguidor = _userAccess.GetUsuario(usuario);
-                seguidor.nsiguiendo += 1;
-                _userAccess.UpdateUsuario(seguidor);
-            } catch (DbUpdateException) {
+            ModelUsuario siguiendo = _userAccess.GetUsuario(usuarioaseguir);
+            siguiendo.nseguidores += 1;
+            _userAccess.UpdateUsuario(siguiendo);
+            ModelUsuario seguidor = _userAccess.GetUsuario(usuario);
+            seguidor.nsiguiendo += 1;
+            _userAccess.UpdateUsuario(seguidor);
+    
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteConfirmed(string usuarioaseguir, string usuario)
+        {
+            try {
                 _dataAccessProvider.DeleteSeguidor(usuarioaseguir + usuario);
                 ModelUsuario siguiendo = _userAccess.GetUsuario(usuarioaseguir);
                 siguiendo.nseguidores -= 1;
@@ -48,20 +53,11 @@ namespace straviaBackend.Controllers
                 ModelUsuario seguidor = _userAccess.GetUsuario(usuario);
                 seguidor.nsiguiendo -= 1;
                 _userAccess.UpdateUsuario(seguidor);
+            } catch (DbUpdateException) { 
+            
             }
-    
-        }
-
-        [HttpDelete("{idelemento}")]
-        public IActionResult DeleteConfirmed(string usuario)
-        {
-            var data = _dataAccessProvider.Getelemento(usuario);
-            if (data == null)
-            {
-                return NotFound();
-            }
-            _dataAccessProvider.DeleteSeguidor(data.idelemento);
-
+            
+            
             return Ok();
         }
 

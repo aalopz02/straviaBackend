@@ -27,7 +27,7 @@ namespace straviaBackend.models
         public DbSet<ModelActividad> actividad { get; set; }
         public DbSet<ModelInscripcionCarrera> inscripcioncarreras { get; set; }
         public DbSet<ModelInscripcionReto> inscripcionesreto { get; set; }
-
+        public DbSet<ModelUnionUsuarioGrupo> unionusuariogrupo { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
