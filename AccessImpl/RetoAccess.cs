@@ -9,21 +9,35 @@ using System.Threading.Tasks;
 
 namespace straviaBackend.AccessImpl
 {
+    /// <summary>
+    /// Access para el manejo de retos
+    /// </summary>
     public class RetoAccess : IRetoAccessInterface
     {
         private readonly StravaContext _context;
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context"></param>
         public RetoAccess(StravaContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Método para añadir reto
+        /// </summary>
+        /// <param name="reto">Model del reto a añadir</param>
         public void AddReto(ModelReto reto)
         {
             _context.retos.Add(reto);
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Método para eliminar un reto
+        /// </summary>
+        /// <param name="nombreReto">Nombre del reto a eliminar</param>
         public void DeleteReto(string nombreReto)
         {
             var entity = _context.retos.FirstOrDefault(t => t.nombrereto == nombreReto);
@@ -35,17 +49,29 @@ namespace straviaBackend.AccessImpl
             _context.retos.Remove(entity);
             _context.SaveChanges();
         }
-
+        /// <summary>
+        /// Método get para reto
+        /// </summary>
+        /// <param name="nombreReto">Nombre del reto a buscar</param>
+        /// <returns>Reto a buscar</returns>
         public ModelReto GetReto(string nombreReto)
         {
             return _context.retos.FirstOrDefault(t => t.nombrereto == nombreReto);
         }
-
+        /// <summary>
+        /// Método get para retos
+        /// </summary>
+        /// <returns>Lista de retos</returns>
         public List<ModelReto> GetRetos()
         {
             return _context.retos.ToList();
         }
 
+        /// <summary>
+        /// Método get de los retos de un usuario
+        /// </summary>
+        /// <param name="username">Usuario al que se desean los retos</param>
+        /// <returns>Lista de retos de usuario</returns>
         public List<ModelRetoView> GetRetosForUser(string username)
         {
             List<String> listaRetosInscrito = _context.inscripcionesreto.Where(t => t.nombreusuario == username).Select(t => t.nombreusuario).ToList();
@@ -72,7 +98,11 @@ namespace straviaBackend.AccessImpl
             return listaend;
         }
 
-
+        /// <summary>
+        /// Método para actualizar un reto
+        /// </summary>
+        /// <param name="reto">Model del reto a agregar</param>
+        /// <param name="old">Model del reto viejo</param>
         public void UpdateReto(ModelReto reto,ModelReto old)
         {
             _context.Entry(old).State = EntityState.Detached;

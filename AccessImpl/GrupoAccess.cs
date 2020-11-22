@@ -8,21 +8,34 @@ using System.Threading.Tasks;
 
 namespace straviaBackend.AccessImpl
 {
+    /// <summary>
+    /// Access para el manejo de grupos
+    /// </summary>
     public class GrupoAccess : IGrupoAccessInterface
     {
         private readonly StravaContext _context;
-
+        /// <summary>
+        /// COnstructor
+        /// </summary>
+        /// <param name="context"></param>
         public GrupoAccess(StravaContext context)
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Método para añadir grupos
+        /// </summary>
+        /// <param name="grupo">Model del grupo a añadir</param>
         public void AddGrupo(ModelGrupo grupo)
         {
             _context.grupos.Add(grupo);
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Método para eliminar grupo
+        /// </summary>
+        /// <param name="idGrupo">id del grupo a eliminar</param>
         public void DeleteGrupo(string idGrupo)
         {
             var entity = _context.grupos.FirstOrDefault(t => t.idgrupo == idGrupo);
@@ -30,6 +43,11 @@ namespace straviaBackend.AccessImpl
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Metodo get para grupo por nombre
+        /// </summary>
+        /// <param name="nombreGrupo">Nombre del grupo a obtener</param>
+        /// <returns>Lista de grupos con el nombre</returns>
         public List<ModelGrupo> GetGrupo(string nombreGrupo)
         {
             return _context.grupos.Where(t => t.nombregrupo== nombreGrupo).OrderBy(t => t.nombregrupo).ToList();
@@ -39,7 +57,11 @@ namespace straviaBackend.AccessImpl
         {
             return _context.grupos.ToList();
         }
-
+        /// <summary>
+        /// Método para obtener grupos para el usuarop
+        /// </summary>
+        /// <param name="username">Usuario a obtener grupos</param>
+        /// <returns>Lista de grupos para usuario</returns>
         public List<ModelGrupoView> GetGruposForUser(string username)
         {
             List<ModelGrupo> allgroups = _context.grupos.ToList();
@@ -64,6 +86,10 @@ namespace straviaBackend.AccessImpl
             return models;
         }
 
+        /// <summary>
+        /// Método para actualizar un grupo
+        /// </summary>
+        /// <param name="grupo">Model del grupo a actualizar</param>
         public void UpdateGrupo(ModelGrupo grupo)
         {
             _context.grupos.Update(grupo);
