@@ -15,18 +15,30 @@ namespace straviaBackend.Controllers
     {
         private readonly ITipoActAccessInterface _dataAccessProvider;
 
+        /// <summary>
+        /// Constructor de clase
+        /// </summary>
+        /// <param name="dataAccessProvider"> Acceso a tipos de tipos de actividades </param>
         public TipoActController(ITipoActAccessInterface dataAccessProvider)
         {
             _dataAccessProvider = dataAccessProvider;
         }
 
-        //https://localhost:44379/api/TipoAct/1
+        /// <summary>
+        /// Get de actividad por id
+        /// </summary>
+        /// <param name="idact"></param>
+        /// <returns> Modelo de la actividad </returns>
         [HttpGet("{idact}")]
         public ModelTipoActividad Get(int idact)
         {
             return _dataAccessProvider.GetActividad(idact);
         }
 
+        /// <summary>
+        /// Get de todas las actividades
+        /// </summary>
+        /// <returns> Lista de las actividades </returns>
         [HttpGet]
         public IEnumerable<ModelTipoActividad> GetAll()
         {

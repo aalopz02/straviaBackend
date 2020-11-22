@@ -17,6 +17,11 @@ namespace straviaBackend.Controllers
         private readonly IUsuarioAccessInterface _dataAccessProvider;
         private readonly IActividadAccess _actividadAccess;
 
+        /// <summary>
+        /// Constructor de la clase
+        /// </summary>
+        /// <param name="dataAccessProvider"> Acceso a la tabla de usuarios </param>
+        /// <param name="actividadAccess"> Acceso a tabla de actividades </param>
         public UsuarioController(IUsuarioAccessInterface dataAccessProvider,
                                     IActividadAccess actividadAccess)
         {
@@ -24,20 +29,35 @@ namespace straviaBackend.Controllers
             _actividadAccess = actividadAccess;
         }
 
-        //https://localhost:44379/api/Usuario/aalopz01
-
+        /// <summary>
+        /// Obtener un usuario por nombre de usuario
+        /// </summary>
+        /// <param name="nombreusuario"></param>
+        /// <returns> Modelo del usuario </returns>
         [HttpGet("{nombreusuario}")]
         public ModelUsuario GetUsuario(string nombreusuario)
         {
             return _dataAccessProvider.GetUsuario(nombreusuario);
         }
 
+        /// <summary>
+        /// List de modelos para la busqueda de usuarios 
+        /// </summary>
+        /// <param name="busqueda"> String dobre el cual se va a buscar </param>
+        /// <param name="usuario"> Usuario que busca </param>
+        /// <returns> Lista con los usuarios con la perspectiva de un usuario </returns>
         [HttpGet]
         public IEnumerable<ModelSearchUserView> GetAll(String busqueda, String usuario)
         {
             return _dataAccessProvider.GetUsuarios(busqueda, usuario);
         }
 
+
+        /// <summary>
+        /// Verificar el login de un usuario
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns> Bool si cumple el login </returns>
         [HttpPost("CheckUsuario")]
         
         public bool CheckUsuario([FromBody] UserLoginModel data)
@@ -57,6 +77,17 @@ namespace straviaBackend.Controllers
             }
         }
 
+        /// <summary>
+        /// Post de un nuevo usuario
+        /// </summary>
+        /// <param name="nombreusuario"></param>
+        /// <param name="password"></param>
+        /// <param name="fname"></param>
+        /// <param name="mname"></param>
+        /// <param name="lname"></param>
+        /// <param name="fechaNacimiento"></param>
+        /// <param name="nacionalidad"></param>
+        /// <param name="img"> Json con la imagen en string h64 </param>
         [HttpPost]
         public void POSTUsuario(String nombreusuario, String password, String fname,
         String mname, String lname, String fechaNacimiento, String nacionalidad, [FromBody] FileModel img)
@@ -77,6 +108,16 @@ namespace straviaBackend.Controllers
             _dataAccessProvider.AddUsuario(usuario);
         }
 
+        /// <summary>
+        /// Modificar un usuario
+        /// </summary>
+        /// <param name="nombreusuario"></param>
+        /// <param name="password"></param>
+        /// <param name="fname"></param>
+        /// <param name="mname"></param>
+        /// <param name="lname"></param>
+        /// <param name="nacionalidad"></param>
+        /// <param name="img"> Json con la imagen en string h64 </param>
         [HttpPatch]
         public void ModUser(String nombreusuario, String password, String fname,
        String mname, String lname, String nacionalidad, [FromBody] FileModel img)

@@ -39,7 +39,7 @@ namespace Strava2._0Api
             
             services.AddControllers();
             var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
-
+            //Se configuran los credenciales para acceder a la base de datos
             services.AddDbContext<StravaContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=stravia2.0;User Id=postgres;Password=2098;"));
 
             services.AddScoped<ITipoActAccessInterface, TipoActAccess>();

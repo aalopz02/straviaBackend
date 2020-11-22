@@ -15,11 +15,20 @@ namespace straviaBackend.Controllers
     {
         private readonly IGrupoAccessInterface _dataAccessProvider;
 
+        /// <summary>
+        /// Constructor de la clase
+        /// </summary>
+        /// <param name="dataAccessProvider"> Acceso a tabla grupos </param>
         public GruposUserController(IGrupoAccessInterface dataAccessProvider)
         {
             _dataAccessProvider = dataAccessProvider;
         }
 
+        /// <summary>
+        /// Get de modelos para un usuario
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>Lista de grupos segun vista de un usuarios</returns>
         [HttpGet]
         public IEnumerable<ModelGrupoView> Get(string username)
         {

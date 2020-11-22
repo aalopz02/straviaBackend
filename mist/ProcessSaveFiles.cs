@@ -15,6 +15,12 @@ namespace straviaBackend.mist
         private static string urlrutascarreras = "D://OneDrive//Escritorio//dbstrava//reporutascarreras//";
         private static string urlrecibo = "D://OneDrive//Escritorio//dbstrava//reporecibos//";
 
+        /// <summary>
+        /// Funcion que salva la imagen para almacenar recibos de pago
+        /// </summary>
+        /// <param name="inFile">archivo a guardar codificado en h64</param>
+        /// <param name="username">usuario que hizo el tramite</param>
+        /// <returns>Ruta del archivo</returns>
         public static string SaveRecibo(FileModel inFile, string username)
         {
 
@@ -39,6 +45,12 @@ namespace straviaBackend.mist
             }
         }
 
+        /// <summary>
+        /// Funcion que salva la imagen de perfil de un usuario
+        /// </summary>
+        /// <param name="inFile">archivo a guardar codificado en h64</param>
+        /// <param name="username">usuario</param>
+        /// <returns>Ruta del archivo</returns>
         public static string saveImg(FileModel inFile, string username) {
 
             string content = inFile.file;
@@ -62,6 +74,13 @@ namespace straviaBackend.mist
             }
         }
 
+        /// <summary>
+        /// Funcion que guarda la actividad realizada por un usuario
+        /// </summary>
+        /// <param name="inFile">Archivo de la ruta, se maneja como un solo string</param>
+        /// <param name="username">Usuario que realizo la actividad</param>
+        /// <param name="date">Fecha de la actividad</param>
+        /// <returns>Direccion del archivo tipo usuario+fecha.txt</returns>
         public static string saveRuta(FileModel inFile, string username, string date)
         {
             string content = inFile.file;
@@ -82,6 +101,12 @@ namespace straviaBackend.mist
             }
         }
 
+       /// <summary>
+       /// Funcion que salva una ruta de una carrera
+       /// </summary>
+       /// <param name="inFile"></param>
+       /// <param name="nombreCarrera"></param>
+       /// <returns>Direccion del archivo de la forma nombrecarrera.txt</returns>
         public static string saveRutaCarrera(FileModel inFile, string nombreCarrera)
         {
             string content = inFile.file;

@@ -18,6 +18,11 @@ namespace straviaBackend.Controllers
         private readonly IActividadAccess _dataAccessProvider;
         private readonly IUsuarioAccessInterface _usuarioAccess;
 
+        /// <summary>
+        /// Constructor de clase
+        /// </summary>
+        /// <param name="dataAccessProvider">Acceso a la tabla de actividad</param>
+        /// <param name="usuarioAccess">Acceso a la tabla de usuario</param>
         public ActividadController(IActividadAccess dataAccessProvider,
                                     IUsuarioAccessInterface usuarioAccess)
         {
@@ -25,19 +30,38 @@ namespace straviaBackend.Controllers
             _usuarioAccess = usuarioAccess;
         }
 
+        /// <summary>
+        /// Get para una actividad por id
+        /// </summary>
+        /// <param name="idactividad"> id de la actividad</param>
+        /// <returns>Modelo de la actividad</returns>
         [HttpGet]
         public ModelActividad Get(string idactividad)
         {
             return _dataAccessProvider.GetActividad(idactividad);
         }
 
+        /// <summary>
+        /// Obtiene todas las actividades de los usuarios a los que un usuario sigue
+        /// </summary>
+        /// <param name="seguidor">Usuario que sigue</param>
+        /// <returns>Lista con los modelos de las actividades</returns>
         [HttpGet("{seguidor}")]
         public IEnumerable<ModelActividadView> GetAll(string seguidor)
         {
             return _dataAccessProvider.GetActividades(seguidor);
         }
 
-        //https://localhost:44379/api/Actividad?nombreusuario=aalopz02&date=2006-01-01&duracion=60&idact=2&distancia=10&tipo=reto
+        /// <summary>
+        /// Post para agregar una actividad a un usuario especifico
+        /// </summary>
+        /// <param name="nombreusuario"></param>
+        /// <param name="date"></param>
+        /// <param name="duracion"></param>
+        /// <param name="idact"></param>
+        /// <param name="distancia"></param>
+        /// <param name="tipo"></param>
+        /// <param name="ruta"></param>
         [HttpPost]
         public void AddActividad(string nombreusuario, string date, int duracion, int idact, int distancia, string tipo, [FromBody] FileModel ruta)
         {

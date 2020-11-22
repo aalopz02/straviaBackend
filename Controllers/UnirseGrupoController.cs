@@ -14,11 +14,20 @@ namespace straviaBackend.Controllers
     {
         private readonly IUnionGrupoAccessInterface _dataAccessProvider;
 
+        /// <summary>
+        /// Constructor de clase
+        /// </summary>
+        /// <param name="dataAccessProvider"> Acceso a tabla de uniones a grupos </param>
         public UnirseGrupoController(IUnionGrupoAccessInterface dataAccessProvider)
         {
             _dataAccessProvider = dataAccessProvider;
         }
 
+        /// <summary>
+        /// Post de nuevo miembro a un grupo
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="namegrupo"></param>
         [HttpPost]
         public void Post(string username, string namegrupo) {
             _dataAccessProvider.AddUnion(new models.ModelUnionUsuarioGrupo { 
@@ -28,6 +37,11 @@ namespace straviaBackend.Controllers
             });
         }
 
+        /// <summary>
+        /// delete de la inscripcion al grupo
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="namegrupo"></param>
         [HttpDelete]
         public void Delete(string username, string namegrupo)
         {

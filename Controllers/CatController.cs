@@ -19,13 +19,22 @@ namespace straviaBackend.Controllers
         {
             _dataAccessProvider = dataAccessProvider;
         }
-        //https://localhost:44379/api/Cat/1
+        
+        /// <summary>
+        /// Get para una categoria
+        /// </summary>
+        /// <param name="idcat"></param>
+        /// <returns>Modelo de la categoria</returns>
         [HttpGet("{idcat}")]
         public ModelCategoria Get(int idcat)
         {
             return _dataAccessProvider.GetCat(idcat);
         }
 
+        /// <summary>
+        /// Lista de dategorias
+        /// </summary>
+        /// <returns>Lista con todos lo modelos de las categorias</returns>
         [HttpGet]
         public IEnumerable<ModelCategoria> GetAll()
         {

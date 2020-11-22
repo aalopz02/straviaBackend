@@ -18,12 +18,22 @@ namespace straviaBackend.Controllers
         private readonly ISeguidoresAccess _dataAccessProvider;
         private readonly IUsuarioAccessInterface _userAccess;
 
+        /// <summary>
+        /// Contructor de clase
+        /// </summary>
+        /// <param name="dataAccessProvider"> Acceso a tabla de seguidores </param>
+        /// <param name="userAccess"> Acceso a tabla de usuarios </param>
         public SeguidoresController(ISeguidoresAccess dataAccessProvider, IUsuarioAccessInterface userAccess)
         {
             _dataAccessProvider = dataAccessProvider;
             _userAccess = userAccess;
         }
 
+        /// <summary>
+        /// Post para generar un nuevo seguidor
+        /// </summary>
+        /// <param name="usuarioaseguir"> Usuario al que se va a seguir </param>
+        /// <param name="usuario"> Usuario que va a seguir </param>
         [HttpPost]
         public void Post(string usuarioaseguir, string usuario)
         {
@@ -42,6 +52,12 @@ namespace straviaBackend.Controllers
     
         }
 
+        /// <summary>
+        /// Funcion de delete
+        /// </summary>
+        /// <param name="usuarioaseguir"></param>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
         [HttpDelete]
         public IActionResult DeleteConfirmed(string usuarioaseguir, string usuario)
         {
@@ -61,6 +77,11 @@ namespace straviaBackend.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Delete de un seguidor
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
         [HttpGet("{usuario}")]
         public List<ModelUsuario> Details(string usuario)
         {

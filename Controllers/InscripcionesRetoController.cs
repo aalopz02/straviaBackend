@@ -21,6 +21,13 @@ namespace straviaBackend.Controllers
         private readonly ICategoriasporCarreraAccessInterface _cats;
         private readonly IRetoAccessInterface _retos;
 
+        /// <summary>
+        /// Constructor de la clase
+        /// </summary>
+        /// <param name="dataAccessProvider"> Acceso a tabla inscripciones por reto</param>
+        /// <param name="pats"> Acceso a tabla de patrocinadores por carrera </param>
+        /// <param name="cats"> Acceso a tabla de categorias por carreras </param>
+        /// <param name="retos"> Acceso a retos </param>
         public InscripcionesRetoController(IInscripcionRetoAccessInterface dataAccessProvider,
                                     IPatrociandorporCarreraAccessInterface pats,
                                     ICategoriasporCarreraAccessInterface cats,
@@ -31,14 +38,23 @@ namespace straviaBackend.Controllers
             _cats = cats;
             _retos = retos;
         }
-        //https://localhost:44379/api/InscripcionesReto?username=aalopz02
+        
+        /// <summary>
+        /// Get para lista de retos para un usuario
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>Lista de modelos segun vista de usuario </returns>
         [HttpGet]
         public IEnumerable<ModelRetoView> GET(string username) {
             return _retos.GetRetosForUser(username);
         }
 
-        //https://localhost:44379/api/InscripcionesReto?nombreCarrera=lacarrera&nombreUsuario=nombre
-        [HttpPost]//String nombreReto,String nombreUsuario
+        /// <summary>
+        /// Post de inscripcion de reto
+        /// </summary>
+        /// <param name="nombreReto"></param>
+        /// <param name="nombreUsuario"></param>
+        [HttpPost]
         public void AddInscripcionReto(String nombreReto, String nombreUsuario)
         {
             ModelInscripcionReto inscripcionreto = new ModelInscripcionReto

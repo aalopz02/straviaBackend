@@ -13,6 +13,9 @@ namespace straviaBackend.models
         {
         }
 
+        /// <summary>
+        /// Definiciones de tablas para la base de datos, con sus respectivos modelos
+        /// </summary>
         public DbSet<ModelCarrera> carreras { get; set; }
         public DbSet<ModelUsuario> usuario { get; set; }
         public DbSet<ModelCategoria> categorias { get; set; }

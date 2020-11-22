@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Http.Features; 
 using Microsoft.AspNetCore.Mvc;
 using models;
 using straviaBackend.interfaces;
@@ -20,6 +20,12 @@ namespace straviaBackend.Controllers
         private readonly IPatrociandorporCarreraAccessInterface _pats;
         private readonly ICategoriasporCarreraAccessInterface _cats;
 
+        /// <summary>
+        /// Constructor de la clase
+        /// </summary>
+        /// <param name="dataAccessProvider"> Acceso a carreras </param>
+        /// <param name="pats"> Acceso a patrocinadores por carrera</param>
+        /// <param name="cats"> Acceso a categorias por carrera</param>
         public CarrerasController(ICarreraAccessInterface dataAccessProvider,
                                     IPatrociandorporCarreraAccessInterface pats,
                                     ICategoriasporCarreraAccessInterface cats)
@@ -29,13 +35,29 @@ namespace straviaBackend.Controllers
             _cats = cats;
         }
 
+        /// <summary>
+        /// Get de las carreras para un usuario
+        /// </summary>
+        /// <param name="username">Usuario a consultar</param>
+        /// <returns>Modelo con los datos de la carrera</returns>
         [HttpGet]
         public IEnumerable<ModelCarreraView> Get(string username)
         {
             return _dataAccessProvider.GetCarreras(username);
         }
 
-        //https://localhost:44379/api/Carreras?nombreCarrera=lacarrera&Costo=12345&Cuenta=1234567890&Fecha=fecha&privacidad=publico&idtipo=1&ruta=0&patrocinadores=1.2&categorias=1.2.3
+        /// <summary>
+        /// post de carrera nueva
+        /// </summary>
+        /// <param name="nombreCarrera"></param>
+        /// <param name="Costo"></param>
+        /// <param name="Cuenta"></param>
+        /// <param name="Fecha"></param>
+        /// <param name="privacidad"></param>
+        /// <param name="idtipo"></param>
+        /// <param name="patrocinadores"></param>
+        /// <param name="categorias"></param>
+        /// <param name="rutacarrera"> Json con la ruta en string de la carrera</param>
         [HttpPost]//String nombreCarrera,int Costo,int Cuenta,String Fecha,String privacidad, int idtipo, String patrocinadores,String categorias
         public void AddCarrera(String nombreCarrera, int Costo, int Cuenta, DateTime Fecha, String privacidad, int idtipo, String patrocinadores, String categorias,[FromBody] FileModel rutacarrera)
         {
@@ -70,12 +92,30 @@ namespace straviaBackend.Controllers
             }
         }
 
+        /// <summary>
+        /// Get para una carrera
+        /// </summary>
+        /// <param name="nombreCarrera"></param>
+        /// <returns>Carrera obtenido por nombre</returns>
         [HttpGet("{nombreCarrera}")]
         public ModelCarrera Details(string nombreCarrera)
         {
             return _dataAccessProvider.GetCarrera(nombreCarrera);
         }
 
+        /// <summary>
+        /// Modificar carrera
+        /// </summary>
+        /// <param name="nombreCarrera"></param>
+        /// <param name="Costo"></param>
+        /// <param name="Cuenta"></param>
+        /// <param name="Fecha"></param>
+        /// <param name="privacidad"></param>
+        /// <param name="idtipo"></param>
+        /// <param name="patrocinadores"></param>
+        /// <param name="categorias"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [HttpPut]
         public IActionResult Edit(String nombreCarrera, int Costo, int Cuenta, DateTime Fecha, String privacidad, int idtipo, String patrocinadores, String categorias, [FromBody] FileModel file)
         {
@@ -137,6 +177,10 @@ namespace straviaBackend.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Borrar carrera
+        /// </summary>
+        /// <param name="nombreCarrera"></param>
         [HttpDelete]
         public void Delete(string nombreCarrera)
         {

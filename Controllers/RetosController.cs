@@ -19,7 +19,11 @@ namespace straviaBackend.Controllers
         private readonly IRetoAccessInterface _dataAccessProvider;
         private readonly IPatrociandorporRetoAccessInterface _pats;
        
-
+        /// <summary>
+        /// Cosntructor de la clase
+        /// </summary>
+        /// <param name="dataAccessProvider"> Acceso a retos</param>
+        /// <param name="pats"> Acceso a patrocinadores </param>
         public RetosController(IRetoAccessInterface dataAccessProvider,
                                     IPatrociandorporRetoAccessInterface pats)
         {
@@ -28,20 +32,38 @@ namespace straviaBackend.Controllers
             
     }
 
+        /// <summary>
+        /// Obtener lista de retos
+        /// </summary>
+        /// <returns> Lista con modelos de retos </returns>
         [HttpGet]
         public IEnumerable<ModelReto> Get()
         {
             return _dataAccessProvider.GetRetos();
         }
 
+        /// <summary>
+        /// Lista de modelos segun vista usuario
+        /// </summary>
+        /// <param name="nombreUsuario"></param>
+        /// <returns> Lista con los modelos segun la vista de un usuario </returns>
         [HttpGet("busqueda/{nombreUsuario}")]
         public IEnumerable<ModelRetoView> Get(string nombreUsuario)
         {
             return _dataAccessProvider.GetRetosForUser(nombreUsuario);
         }
 
-        //https://localhost:44379/api/Retos?nombreReto=reto1&d1=03/12/1998&d2=05/10/2020&Tipoact=1&tipo=fondo&Privacidad=publico&patrocinadores=1.2
-        [HttpPost] //String nombreReto, DateTime d1, DateTime d2, int Tipo, String Privacidad)
+        /// <summary>
+        /// Post de nuevo reto
+        /// </summary>
+        /// <param name="nombreReto"></param>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        /// <param name="Tipoact"></param>
+        /// <param name="tipo"></param>
+        /// <param name="Privacidad"></param>
+        /// <param name="patrocinadores"></param>
+        [HttpPost]
         public void AddReto(String nombreReto, DateTime d1, DateTime d2, int Tipoact,String tipo, String Privacidad, String patrocinadores)
         {
             ModelReto reto = new ModelReto
@@ -69,12 +91,28 @@ namespace straviaBackend.Controllers
             }
         }
 
+        /// <summary>
+        /// Get de modelo por reto
+        /// </summary>
+        /// <param name="nombreReto"></param>
+        /// <returns> Modelo del reto  </returns>
         [HttpGet("{nombreReto}")]
         public ModelReto Details(string nombreReto)
         {
             return _dataAccessProvider.GetReto(nombreReto);
         }
 
+        /// <summary>
+        /// Update de reto
+        /// </summary>
+        /// <param name="nombreReto"></param>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        /// <param name="Tipoact"></param>
+        /// <param name="tipo"></param>
+        /// <param name="Privacidad"></param>
+        /// <param name="patrocinadores"></param>
+        /// <returns></returns>
         [HttpPut]
         public IActionResult Edit(String nombreReto, DateTime d1, DateTime d2, int Tipoact, String tipo, String Privacidad, String patrocinadores) 
         {
@@ -113,6 +151,11 @@ namespace straviaBackend.Controllers
 
         }
 
+        /// <summary>
+        /// Delete de reto
+        /// </summary>
+        /// <param name="nombreReto"></param>
+        /// <returns></returns>
         [HttpDelete("{nombreReto}")]
         public IActionResult DeleteConfirmed(string nombreReto)
         {
